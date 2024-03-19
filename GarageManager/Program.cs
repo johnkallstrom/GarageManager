@@ -1,2 +1,2 @@
-﻿var app = new Application();
+﻿var app = new Application(new ConsoleUI());
 app.Run();
