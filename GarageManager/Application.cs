@@ -2,6 +2,7 @@
 {
 	internal class Application
 	{
+		private bool _isRunning = true;
 		private IUserInterface _ui;
 
 		public Application(IUserInterface userInterface)
@@ -11,7 +12,11 @@
 
 		internal void Run()
 		{
-			_ui.Print("Garage Manager");
+			while (_isRunning)
+			{
+				_ui.PrintMenu("Garage Manager", ["0. Exit"]);
+				_isRunning = false;
+			}
         }
 	}
 }
