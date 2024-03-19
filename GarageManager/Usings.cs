@@ -1,2 +1,2 @@
 ﻿global using GarageManager;
-global using GarageManager.Interfaces;
+global using GarageManager.UI;
