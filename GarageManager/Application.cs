@@ -15,6 +15,8 @@
 			while (_isRunning)
 			{
 				_ui.PrintMenu("Garage Manager", ["0. Exit"]);
+				string selection = _ui.ReadString("Enter: ");
+
 				_isRunning = false;
 			}
         }

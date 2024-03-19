@@ -5,5 +5,6 @@
         void Print(string message);
         void PrintMenu(string title, string[] options);
         void Clear();
+        string ReadString(string prompt);
     }
 }

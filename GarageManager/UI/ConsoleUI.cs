@@ -16,5 +16,19 @@
                 Console.WriteLine(option);
             }
         }
+
+		public string ReadString(string prompt)
+		{
+			while (true)
+			{
+				Console.Write(prompt);
+				string? str = Console.ReadLine();
+
+				if (!string.IsNullOrWhiteSpace(str))
+				{
+					return str;
+				}
+			}
+		}
 	}
 }
