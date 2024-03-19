@@ -14,8 +14,19 @@
 		{
 			while (_isRunning)
 			{
-				_ui.PrintMenu("Garage Manager", ["0. Exit"]);
-				string selection = _ui.ReadString("Enter: ");
+				_ui.PrintMenu("Garage Manager", ["1. Garage", "0. Exit"]);
+				int selection = _ui.ReadInt("Enter: ", min: 0, max: 1);
+
+				switch (selection)
+				{
+					case (int)Option.Garage:
+						_ui.Clear();
+						_ui.Print("View Garage");
+						break;
+					case (int)Option.Exit:
+						Environment.Exit(0);
+						break;
+				}
 
 				_isRunning = false;
 			}
