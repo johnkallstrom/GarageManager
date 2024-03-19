@@ -1,2 +1,2 @@
-﻿Console.WriteLine("Garage Manager");
-Console.ReadKey();
+﻿var app = new Application();
+app.Run();
