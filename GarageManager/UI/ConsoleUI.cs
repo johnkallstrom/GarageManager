@@ -17,6 +17,33 @@
             }
         }
 
+		public int ReadInt(string prompt)
+		{
+			while (true)
+			{
+				Console.Write(prompt);
+				if (int.TryParse(Console.ReadLine(), out int result))
+				{
+					return result;
+				}
+			}
+		}
+
+		public int ReadInt(string prompt, int min, int max)
+		{
+			while (true)
+			{
+				Console.Write(prompt);
+				if (int.TryParse(Console.ReadLine(), out int result))
+				{
+					if (result >= min && result <= max)
+					{
+						return result;
+					}
+				}
+			}
+		}
+
 		public string ReadString(string prompt)
 		{
 			while (true)
