@@ -1,4 +1,3 @@
 ﻿global using GarageManager;
 global using GarageManager.UI;
-global using GarageManager.Garage;
-global using GarageManager.Constants;
+global using GarageManager.UI.Constants;
