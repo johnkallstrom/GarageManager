@@ -2,7 +2,7 @@
 {
 	internal class Application
 	{
-		private bool _isRunning = true;
+		private bool _isAppRunning = true;
 		private IUserInterface _ui;
 
 		public Application(IUserInterface userInterface)
@@ -12,24 +12,53 @@
 
 		internal void Run()
 		{
-			while (_isRunning)
+			while (_isAppRunning)
 			{
-				_ui.PrintMenu("Garage Manager", ["1. Garage", "0. Exit"]);
-				int selection = _ui.ReadInt("Enter: ", min: 0, max: 1);
+				_ui.Clear();
+				_ui.DisplayMenu(["1. Garage", "0. Exit"]);
 
-				switch (selection)
+				string? input = _ui.ReadString("Enter: ");
+				switch (input)
 				{
-					case (int)Option.Garage:
-						_ui.Clear();
-						_ui.Print("View Garage");
+					case "1":
+						Garage();
 						break;
-					case (int)Option.Exit:
+					case "0":
 						Environment.Exit(0);
 						break;
+					default:
+						_ui.Print("Incorrect input", newLine: false);
+						_ui.Dots();
+						break;
 				}
-
-				_isRunning = false;
 			}
         }
+
+		internal void Garage()
+		{
+			bool isRunning = true;
+
+			while (isRunning)
+			{
+				_ui.Clear();
+				_ui.DisplayMenu(["1. View all parked vehicles", "0. Return to main menu"]);
+
+				string? input = _ui.ReadString("Enter: ");
+				
+				switch (input)
+				{
+					case "1":
+						_ui.Print("Display list of vehicles...");
+                        break;
+					case "0":
+						isRunning = false;
+						break;
+					default:
+						_ui.Print("Incorrect input", newLine: false);
+						_ui.Dots();
+						break;
+				}
+			}
+		}
 	}
 }
