@@ -20,11 +20,11 @@
 				string? input = _ui.ReadString("Enter: ");
 				switch (input)
 				{
-					case "1":
+					case AppMenu.Garage:
 						Garage();
 						break;
-					case "0":
-						Environment.Exit(0);
+					case AppMenu.Exit:
+						Exit();
 						break;
 					default:
 						_ui.Print("Incorrect input", newLine: false);
@@ -47,10 +47,10 @@
 				
 				switch (input)
 				{
-					case "1":
+					case GarageMenu.ViewAllVehicles:
 						_ui.Print("Display list of vehicles...");
                         break;
-					case "0":
+					case GarageMenu.Return:
 						isRunning = false;
 						break;
 					default:
@@ -60,5 +60,7 @@
 				}
 			}
 		}
+
+		internal void Exit() => _isAppRunning = false;
 	}
 }
