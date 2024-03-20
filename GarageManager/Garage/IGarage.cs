@@ -2,7 +2,8 @@
 {
 	internal interface IGarage<T> : IEnumerable<T> where T : IVehicle
 	{
-        T[] Vehicles { get; }
+		int AvailableSpots { get;  }
+        IEnumerable<T> ParkedVehicles { get; }
         void Park(T vehicle);
 		void Remove(T vehicle);
 	}

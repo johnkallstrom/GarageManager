@@ -11,7 +11,8 @@
             _vehicles = new T[_capacity];
         }
 
-		public T[] Vehicles => _vehicles;
+		public int AvailableSpots => _vehicles.Where(v => v is null).Count();
+        public IEnumerable<T> ParkedVehicles => _vehicles.Where(v => v is not null);
 
         public void Park(T vehicle)
 		{
