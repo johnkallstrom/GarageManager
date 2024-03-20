@@ -1,22 +1,22 @@
-﻿var app = new Application(new ConsoleUI());
-app.Run();
+﻿// Could use DI instead
+IGarage<IVehicle> garage = new Garage<IVehicle>(capacity: 10);
+IHandler handler = new GarageHandler(garage);
+IUserInterface consoleUI = new ConsoleUI();
 
-//var garage = new Garage<IVehicle>(10);
-//var handler = new GarageHandler(garage);
+//var app = new Application(consoleUI, handler);
+//app.Run();
 
-//handler.ParkVehicle(new Car("ABC123", "Red", 4));
-//handler.ParkVehicle(new Car("ABC456", "Yellow", 4));
-//handler.ParkVehicle(new Car("ABC789", "Purple", 4));
-//handler.ParkVehicle(new Car("ABC412", "Blue", 4));
-//handler.ParkVehicle(new Car("ABC435", "Green", 4));
+int spots = garage.AvailableSpots;
 
-//var vehicles = handler.GetAll();
+handler.Park(new Car("ABC123", "Green", 4));
+handler.Park(new Car("ABC123", "Green", 4));
+handler.Park(new Car("ABC123", "Green", 4));
 
-//foreach (var vehicle in vehicles)
-//{
-//	if (vehicle is not null)
-//	{
-//		Console.WriteLine(vehicle.ToString());
-//		Console.WriteLine();
-//	}
-//}
+spots = garage.AvailableSpots;
+
+var collection = handler.GetAllParked();
+
+foreach (var v in collection)
+{
+    Console.WriteLine(v.ToString());
+}
