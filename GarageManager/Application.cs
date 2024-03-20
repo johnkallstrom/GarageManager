@@ -2,12 +2,14 @@
 {
 	internal class Application
 	{
-		private bool _isAppRunning = true;
+		private IHandler _handler;
 		private IUserInterface _ui;
+		private bool _isAppRunning = true;
 
-		public Application(IUserInterface userInterface)
+		public Application(IUserInterface userInterface, IHandler handler)
 		{
 			_ui = userInterface;
+			_handler = handler;
 		}
 
 		internal void Run()
@@ -48,7 +50,7 @@
 				switch (input)
 				{
 					case GarageMenu.ViewAllVehicles:
-						_ui.Print("Display list of vehicles...");
+						_ui.Clear();
                         break;
 					case GarageMenu.Return:
 						isRunning = false;
