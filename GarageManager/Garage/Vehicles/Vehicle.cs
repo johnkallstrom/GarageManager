@@ -15,7 +15,7 @@
 
 		public override string ToString()
 		{
-			return $"Number: {RegistrationNumber}, Color: {Color}, Wheels: {NumberOfWheels}";
+			return $"Type: {GetType().Name}\nRegistration: {RegistrationNumber}\nColor: {Color}\nWheels: {NumberOfWheels}";
 		}
 	}
 }

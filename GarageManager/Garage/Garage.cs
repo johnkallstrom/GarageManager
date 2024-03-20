@@ -2,7 +2,7 @@
 {
 	internal class Garage<T> : IGarage<T> where T : IVehicle
 	{
-        private T[] _vehicles;
+        private readonly T[] _vehicles;
 		private int _capacity;
 
         public Garage(int capacity)
