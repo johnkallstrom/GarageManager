@@ -12,5 +12,10 @@
 			Color = color;
 			NumberOfWheels = numberOfWheels;
 		}
+
+		public override string ToString()
+		{
+			return $"Number: {RegistrationNumber}, Color: {Color}, Wheels: {NumberOfWheels}";
+		}
 	}
 }
