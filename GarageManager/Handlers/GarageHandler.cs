@@ -1,6 +1,7 @@
-﻿namespace GarageManager.Handlers
+﻿
+namespace GarageManager.Handlers
 {
-	internal class GarageHandler : IGarageHandler
+	internal class GarageHandler : IHandler
 	{
 		private IGarage<IVehicle> _garage;
 
@@ -9,10 +10,10 @@
 			_garage = garage;
 		}
 
-		public IVehicle[] GetAll() => _garage.Vehicles;
+		public void Park(IVehicle vehicle) => _garage.Park(vehicle);
 
-		public void ParkVehicle(IVehicle vehicle) => _garage.Park(vehicle);
+		public IEnumerable<IVehicle> GetAllParked() => _garage.ParkedVehicles;
 
-		public void RemoveVehicle(IVehicle vehicle) => _garage.Remove(vehicle);
+		public void Remove(IVehicle vehicle) => _garage.Remove(vehicle);
 	}
 }
