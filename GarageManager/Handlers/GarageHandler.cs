@@ -11,14 +11,8 @@
 
 		public IVehicle[] GetAll() => _garage.Vehicles;
 
-		public void ParkVehicle(IVehicle vehicle)
-		{
-			_garage.Park(vehicle);
-		}
+		public void ParkVehicle(IVehicle vehicle) => _garage.Park(vehicle);
 
-		public void RemoveVehicle(IVehicle vehicle)
-		{
-			_garage.Remove(vehicle);
-		}
+		public void RemoveVehicle(IVehicle vehicle) => _garage.Remove(vehicle);
 	}
 }
