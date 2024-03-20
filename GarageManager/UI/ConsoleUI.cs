@@ -4,17 +4,47 @@
 	{
 		public void Clear() => Console.Clear();
 
+		public void Dots()
+		{
+			for (int i = 1; i <= 3; i++)
+			{
+				Console.Write(".");
+				Thread.Sleep(500);
+			}
+		}
+
 		public void Print(string message) => Console.WriteLine(message);
 
-		public void PrintMenu(string title, string[] options)
+		public void Print(string message, bool newLine)
 		{
-			Console.Clear();
-            Console.WriteLine(title);
+			if (!newLine) Console.Write(message);
+			else Console.WriteLine(message);
+		}
 
-			foreach (var option in options)
+		public void DisplayMenu(string[] options)
+		{
+            foreach (var option in options)
+			{
+				Console.WriteLine(option);
+			}
+
+			Console.WriteLine();
+		}
+
+		public void DisplayMenu(string[] options, string title)
+		{
+            if (!string.IsNullOrWhiteSpace(title))
+			{
+                Console.WriteLine(title);
+                Console.WriteLine();
+            }
+
+            foreach (var option in options)
 			{
                 Console.WriteLine(option);
             }
+
+            Console.WriteLine();
         }
 
 		public int ReadInt(string prompt)
@@ -44,18 +74,12 @@
 			}
 		}
 
-		public string ReadString(string prompt)
+		public string? ReadString(string prompt)
 		{
-			while (true)
-			{
-				Console.Write(prompt);
-				string? str = Console.ReadLine();
+			Console.Write(prompt);
+			string? input = Console.ReadLine();
 
-				if (!string.IsNullOrWhiteSpace(str))
-				{
-					return str;
-				}
-			}
+			return input;
 		}
 	}
 }
