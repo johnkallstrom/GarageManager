@@ -1,35 +1,11 @@
 ﻿namespace GarageManager
 {
-	internal class ConsoleUI : IUserInterface
+    internal class ConsoleUI : IUserInterface
 	{
         public void Space() => Console.WriteLine();
 		public void Clear() => Console.Clear();
 
-		public void Dots()
-		{
-			for (int i = 1; i <= 3; i++)
-			{
-				Console.Write(".");
-				Thread.Sleep(500);
-			}
-		}
-
-		public void Dots(int milliseconds)
-		{
-			for (int i = 1; i <= 3; i++)
-			{
-				Console.Write(".");
-				Thread.Sleep(milliseconds);
-			}
-		}
-
 		public void Print(string? message) => Console.WriteLine(message);
-
-		public void Print(string? message, bool newLine)
-		{
-			if (!newLine) Console.Write(message);
-			else Console.WriteLine(message);
-		}
 
 		public void DisplayMenu(string[] options)
 		{
@@ -37,8 +13,6 @@
 			{
 				Console.WriteLine(option);
 			}
-
-			Console.WriteLine();
 		}
 
 		public string? ReadString(string prompt)
@@ -61,6 +35,16 @@
 						Thread.Sleep(500);
 					}
 					break;
+			}
+		}
+
+		public void PrintWithDots(string? message)
+		{
+			Console.Write(message);
+			for (int i = 1; i <= 3; i++)
+			{
+				Console.Write(".");
+				Thread.Sleep(500);
 			}
 		}
 	}
