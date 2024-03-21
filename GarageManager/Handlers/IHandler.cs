@@ -2,7 +2,7 @@
 {
 	internal interface IHandler
 	{
-		void Populate();
+		void Populate(int amount);
 		void Remove(IVehicle vehicle);
 		void Park(IVehicle vehicle);
 		IEnumerable<IVehicle> GetAll();

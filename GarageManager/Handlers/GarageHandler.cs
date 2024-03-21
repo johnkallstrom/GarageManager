@@ -17,16 +17,13 @@
 
 		public string GetInformation() => _garage.Information();
 
-		public void Populate()
+		public void Populate(int amount)
 		{
-			var vehicles = new List<IVehicle>
+			var vehicles = new List<IVehicle>();
+			for (int i = 0; i < amount; i++)
 			{
-				new Car("YTN103", "Green", 4),
-				new Motorcycle("JKM934", "Yellow", 2),
-				new Car("PDN863", "Blue", 4),
-				new Motorcycle("GHJ813", "Red", 2),
-				new Car("WCV901", "Purple", 4),
-			};
+				vehicles.Add(new Car($"ABC{new Random().Next(minValue: 100, maxValue: 999)}", "Green", 4));
+			}
 
 			_garage.Initialize(vehicles);
 		}
