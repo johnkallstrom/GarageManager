@@ -11,6 +11,10 @@
             _vehicles = new T[_capacity];
         }
 
+		public int TotalSpots => _capacity;
+        public int AvailableSpots => _vehicles.Where(v => v is null).Count();
+		public bool IsFull => TotalSpots == GetAllVehicles().Count();
+
 		public void Initialize(List<T> vehicles)
 		{
 			foreach (var v in vehicles)
@@ -18,10 +22,6 @@
 				Park(v);
 			}
 		}
-
-		public int TotalSpots => _capacity;
-        public int AvailableSpots => _vehicles.Where(v => v is null).Count();
-		public bool IsFull => TotalSpots == GetAllVehicles().Count();
 
 		public IEnumerable<T> GetAllVehicles() => _vehicles.Where(v => v is not null);
 
@@ -65,7 +65,7 @@
 
 		public string Information()
 		{
-			return $"Total capacity: {TotalSpots}\nAvailable spots: {AvailableSpots}\nNumber of parked vehicles: {GetAllVehicles().Count()}";
+			return $"Capacity: {TotalSpots}\nAvailable: {AvailableSpots}\nParked vehicles: {GetAllVehicles().Count()}";
 		}
 
 		public IEnumerator<T> GetEnumerator()

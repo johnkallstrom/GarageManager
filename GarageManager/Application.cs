@@ -152,7 +152,7 @@
 			while (running)
 			{
 				_ui.Clear();
-				_ui.DisplayMenu(["1. Populate garage", "0. Return"]);
+				_ui.DisplayMenu(["1. Populate garage", "2. Set garage capacity", "0. Return"]);
 
 				string? input = _ui.ReadString("Enter: ");
 				switch (input)
@@ -169,6 +169,9 @@
 						{
 							_ui.PrintWithDots(ex.Message);
 						}
+						break;
+					case "2":
+						// Todo: Read capacity from user input
 						break;
 					case "0":
 						running = false;
