@@ -17,6 +17,18 @@
 
 		public string GetInformation() => _garage.Information();
 
-		public void Populate(List<IVehicle> vehicles) => _garage.Initialize(vehicles);
+		public void Populate()
+		{
+			var vehicles = new List<IVehicle>
+			{
+				new Car("YTN103", "Green", 4),
+				new Motorcycle("GHJ813", "Yellow", 2),
+				new Car("PDN", "Blue", 4),
+				new Motorcycle("GHJ813", "Red", 2),
+				new Car("WCV", "Purple", 4),
+			};
+
+			_garage.Initialize(vehicles);
+		}
 	}
 }
