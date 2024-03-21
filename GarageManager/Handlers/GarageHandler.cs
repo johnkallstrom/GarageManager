@@ -15,5 +15,7 @@ namespace GarageManager.Handlers
 		public IEnumerable<IVehicle> GetAllParked() => _garage.ParkedVehicles;
 
 		public void Remove(IVehicle vehicle) => _garage.Remove(vehicle);
+
+		public string GetInformation() => _garage.Information();
 	}
 }

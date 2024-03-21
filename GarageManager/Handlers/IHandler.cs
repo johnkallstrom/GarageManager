@@ -5,5 +5,6 @@
 		void Remove(IVehicle vehicle);
 		void Park(IVehicle vehicle);
 		IEnumerable<IVehicle> GetAllParked();
+		string GetInformation();
 	}
 }
