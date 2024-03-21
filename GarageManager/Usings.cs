@@ -1,7 +1,6 @@
 ﻿global using GarageManager;
 global using GarageManager.UI;
 global using GarageManager.UI.Constants;
-global using GarageManager.UI.Enums;
 global using GarageManager.Garage;
 global using GarageManager.Garage.Vehicles;
 global using GarageManager.Handlers;

@@ -1,7 +1,6 @@
-﻿
-namespace GarageManager
+﻿namespace GarageManager
 {
-	internal class Application
+    internal class Application
 	{
 		private IHandler _handler;
 		private IUserInterface _ui;
@@ -18,57 +17,41 @@ namespace GarageManager
 			while (_isAppRunning)
 			{
 				_ui.Clear();
-				_ui.DisplayMenu([$"1. Garage", "0. Exit"]);
+				_ui.DisplayMenu(
+					[
+					"1. List all vehicles", 
+					"2. List vehicles by type", 
+					"3. Park vehicle", 
+					"4. Remove vehicle", 
+					"5. Information", 
+					"6. Settings", 
+					"0. Exit"
+					]);
 
 				string? input = _ui.ReadString("Enter: ");
+
 				switch (input)
 				{
-					case AppMenu.Garage:
-						Garage();
-						break;
-					case AppMenu.Exit:
-						Exit();
-						break;
-					default:
-						_ui.Error(ErrorType.InvalidInput);
-						break;
-				}
-			}
-        }
-
-		private void Garage()
-		{
-			bool isRunning = true;
-
-			while (isRunning)
-			{
-				_ui.Clear();
-				_ui.DisplayMenu(["1. List all vehicles", "2. List vehicles by type", "3. Park vehicle", "4. Remove vehicle", "5. Information", "6. Populate garage", "0. Return to main menu"]);
-
-				string? input = _ui.ReadString("Enter: ");
-				
-				switch (input)
-				{
-					case GarageMenu.ListAllVehicles:
+					case MenuOption.ListAllVehicles:
 						ListAllVehicles();
-                        break;
-					case GarageMenu.ListVehiclesByType:
+						break;
+					case MenuOption.ListVehiclesByType:
 						ListVehiclesByType();
 						break;
-					case GarageMenu.ParkVehicle:
+					case MenuOption.ParkVehicle:
 						ParkVehicle();
 						break;
-					case GarageMenu.RemoveVehicle:
+					case MenuOption.RemoveVehicle:
 						RemoveVehicle();
 						break;
-					case GarageMenu.Information:
+					case MenuOption.Information:
 						Information();
 						break;
-					case GarageMenu.PopulateGarage:
-						PopulateGarage();
+					case MenuOption.Settings:
+						Settings();
 						break;
-					case GarageMenu.Return:
-						isRunning = false;
+					case MenuOption.Exit:
+						Exit();
 						break;
 					default:
 						_ui.Error(ErrorType.InvalidInput);
@@ -96,13 +79,12 @@ namespace GarageManager
 				else
 				{
 					_ui.Print("Garage is empty.");
-					_ui.Space();
 				}
 
 				_ui.DisplayMenu(["0. Return"]);
 				string? input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrWhiteSpace(input) && input.Equals(GarageMenu.Return))
+				if (!string.IsNullOrWhiteSpace(input) && input.Equals(MenuOption.Exit))
 				{
 					break;
 				}
@@ -125,11 +107,10 @@ namespace GarageManager
 					_ui.Print($"{item.Key}: {item.Value}");
 				}
 
-				_ui.Space();
 				_ui.DisplayMenu(["0. Return"]);
 				string? input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrEmpty(input) && input.Equals(GarageMenu.Return)) break;
+				if (!string.IsNullOrEmpty(input) && input.Equals(MenuOption.Exit)) break;
 				else _ui.Error(ErrorType.InvalidInput);
 			}
 		}
@@ -150,12 +131,11 @@ namespace GarageManager
 
 				string information = _handler.GetInformation();
 				_ui.Print(information);
-				_ui.Space();
 
 				_ui.DisplayMenu(["0. Return"]);
 				string? input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrWhiteSpace(input) && input.Equals(GarageMenu.Return))
+				if (!string.IsNullOrWhiteSpace(input) && input.Equals(MenuOption.Exit))
 				{
 					break;
 				}
@@ -166,35 +146,35 @@ namespace GarageManager
 			}
 		}
 
-		private void PopulateGarage()
+		private void Settings()
 		{
-			while (true)
+			bool running = true;
+			while (running)
 			{
 				_ui.Clear();
-				
-				try
-				{
-					_handler.Populate();
-					_ui.Print($"Vehicles added to garage");
-					_ui.Space();
-				}
-				catch (Exception ex)
-				{
-					_ui.Print("Something went wrong");
-					_ui.Print(ex.Message);
-					_ui.Space();
-                }
+				_ui.DisplayMenu(["1. Populate garage", "0. Return"]);
 
-				_ui.DisplayMenu(["0. Return"]);
 				string? input = _ui.ReadString("Enter: ");
-
-				if (!string.IsNullOrEmpty(input) && input.Equals(GarageMenu.Return))
+				switch (input)
 				{
-					break;
-				}
-				else
-				{
-					_ui.Error(ErrorType.InvalidInput);
+					case "1":
+						try
+						{
+							int amount = 5;
+							_handler.Populate(amount);
+							_ui.PrintWithDots($"{amount} vehicles added to garage");
+						}
+						catch (Exception ex)
+						{
+							_ui.PrintWithDots(ex.Message);
+						}
+						break;
+					case "0":
+						running = false;
+						break;
+					default:
+						_ui.Error(ErrorType.InvalidInput);
+						break;
 				}
 			}
 		}
