@@ -27,7 +27,6 @@
 			return _vehicles.Where(v => v is not null);
 		}
 
-		// Todo: Check registration number before adding (must be unique)
 		public void Park(T vehicle)
 		{
 			if (vehicle is null) throw new ArgumentNullException(nameof(vehicle));
@@ -37,8 +36,15 @@
 				IVehicle current = _vehicles[i];
 				if (current is null)
 				{
-					_vehicles[i] = vehicle;
-					break;
+					if (!RegistrationNumberExists(vehicle.RegistrationNumber))
+					{
+						_vehicles[i] = vehicle;
+						break;
+					}
+					else
+					{
+						throw new Exception($"The registration number '{vehicle.RegistrationNumber}' is not unique");
+					}
 				}
 			}
 		}
@@ -77,6 +83,11 @@
 			{
 				yield return vehicle;
 			}
+		}
+
+		public bool RegistrationNumberExists(string registrationNumber)
+		{
+			return _vehicles.Any(v => v is not null && registrationNumber.Equals(v.RegistrationNumber, StringComparison.OrdinalIgnoreCase));
 		}
 	}
 }
