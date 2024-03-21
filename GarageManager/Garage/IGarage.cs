@@ -2,9 +2,10 @@
 {
 	internal interface IGarage<T> : IEnumerable<T> where T : IVehicle
 	{
+		void Initialize(List<T> vehicles);
 		int TotalSpots { get; }
 		int AvailableSpots { get;  }
-        IEnumerable<T> ParkedVehicles { get; }
+		IEnumerable<T> GetAllVehicles();
         void Park(T vehicle);
 		void Remove(T vehicle);
 		string Information();
