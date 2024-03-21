@@ -17,9 +17,8 @@ namespace GarageManager
 		{
 			while (_isAppRunning)
 			{
-				// Todo: Replace magic strings
 				_ui.Clear();
-				_ui.DisplayMenu(["1. Garage", "0. Exit"]);
+				_ui.DisplayMenu([$"1. Garage", "0. Exit"]);
 
 				string? input = _ui.ReadString("Enter: ");
 				switch (input)
@@ -31,8 +30,7 @@ namespace GarageManager
 						Exit();
 						break;
 					default:
-						_ui.Print("Incorrect input", newLine: false);
-						_ui.Dots();
+						_ui.Error(ErrorType.InvalidInput);
 						break;
 				}
 			}
@@ -44,7 +42,6 @@ namespace GarageManager
 
 			while (isRunning)
 			{
-				// Todo: Replace magic strings
 				_ui.Clear();
 				_ui.DisplayMenu(["1. List all vehicles", "2. List vehicles by type", "3. Park vehicle", "4. Remove vehicle", "5. Information", "6. Populate garage", "0. Return to main menu"]);
 
@@ -74,8 +71,7 @@ namespace GarageManager
 						isRunning = false;
 						break;
 					default:
-						_ui.Print("Incorrect input", newLine: false);
-						_ui.Dots();
+						_ui.Error(ErrorType.InvalidInput);
 						break;
 				}
 			}
@@ -112,8 +108,7 @@ namespace GarageManager
 				}
 				else
 				{
-					_ui.Print("Incorret input", newLine: false);
-					_ui.Dots();
+					_ui.Error(ErrorType.InvalidInput);
 				}
 			}
 		}
@@ -153,8 +148,7 @@ namespace GarageManager
 				}
 				else
 				{
-					_ui.Print("Incorret input", newLine: false);
-					_ui.Dots();
+					_ui.Error(ErrorType.InvalidInput);
 				}
 			}
 		}
@@ -164,38 +158,34 @@ namespace GarageManager
 			while (true)
 			{
 				_ui.Clear();
-				_ui.DisplayMenu(["1. Add vehicles", "0. Return"]);
+				
+				try
+				{
+					_handler.Populate();
+					_ui.Print($"Vehicles added to garage");
+					_ui.Space();
+				}
+				catch (Exception ex)
+				{
+					_ui.Print("Something went wrong");
+					_ui.Print(ex.Message);
+					_ui.Space();
+                }
+
+				_ui.DisplayMenu(["0. Return"]);
 				string? input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrWhiteSpace(input) && input.Equals("1"))
-				{
-					var vehicles = new List<IVehicle>
-					{
-						new Car("YTN103", "Green", 4),
-						new Motorcycle("GHJ813", "Yellow", 2),
-						new Car("XOL", "Blue", 4),
-					};
-
-					_handler.Populate(vehicles);
-
-					_ui.Print($"{vehicles.Count()} vehicles added to garage.");
-					_ui.Print("Returning", newLine: false);
-					_ui.Dots(1000);
-
-					break;
-				}
-				else if (!string.IsNullOrWhiteSpace(input) && input.Equals("0"))
+				if (!string.IsNullOrEmpty(input) && input.Equals(GarageMenu.Return))
 				{
 					break;
 				}
 				else
 				{
-					_ui.Print("Incorrect input", newLine: false);
-					_ui.Dots();
+					_ui.Error(ErrorType.InvalidInput);
 				}
 			}
 		}
 
-		internal void Exit() => _isAppRunning = false;
+		private void Exit() => _isAppRunning = false;
 	}
 }
