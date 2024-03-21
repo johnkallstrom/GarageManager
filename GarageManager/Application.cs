@@ -1,4 +1,5 @@
-﻿namespace GarageManager
+﻿
+namespace GarageManager
 {
 	internal class Application
 	{
@@ -16,6 +17,7 @@
 		{
 			while (_isAppRunning)
 			{
+				// Todo: Replace magic strings
 				_ui.Clear();
 				_ui.DisplayMenu(["1. Garage", "0. Exit"]);
 
@@ -36,22 +38,32 @@
 			}
         }
 
-		internal void Garage()
+		private void Garage()
 		{
 			bool isRunning = true;
 
 			while (isRunning)
 			{
+				// Todo: Replace magic strings
 				_ui.Clear();
-				_ui.DisplayMenu(["1. View all parked vehicles", "0. Return to main menu"]);
+				_ui.DisplayMenu(["1. List all parked vehicles", "2. Park vehicle", "3. Remove vehicle", "4. Information", "0. Return to main menu"]);
 
 				string? input = _ui.ReadString("Enter: ");
 				
 				switch (input)
 				{
-					case GarageMenu.ViewAllVehicles:
-						_ui.Clear();
+					case GarageMenu.ListParkedVehicles:
+						ListParkedVehicles();
                         break;
+					case GarageMenu.ParkVehicle:
+						ParkVehicle();
+						break;
+					case GarageMenu.RemoveVehicle:
+						RemoveVehicle();
+						break;
+					case GarageMenu.Information:
+						Information();
+						break;
 					case GarageMenu.Return:
 						isRunning = false;
 						break;
@@ -59,6 +71,75 @@
 						_ui.Print("Incorrect input", newLine: false);
 						_ui.Dots();
 						break;
+				}
+			}
+		}
+
+		private void ListParkedVehicles()
+		{
+			while (true)
+			{
+				_ui.Clear();
+
+				var vehicles = _handler.GetAllParked();
+
+				if (vehicles.Count() > 0)
+				{
+					foreach (var v in vehicles)
+					{
+						_ui.Print(v.ToString());
+					}
+				}
+				else
+				{
+					_ui.Print("Garage is empty.");
+					_ui.Space();
+				}
+
+				_ui.DisplayMenu(["0. Return"]);
+				string? input = _ui.ReadString("Enter: ");
+
+				if (!string.IsNullOrWhiteSpace(input) && input.Equals(GarageMenu.Return))
+				{
+					break;
+				}
+				else
+				{
+					_ui.Print("Incorret input", newLine: false);
+					_ui.Dots();
+				}
+			}
+		}
+
+		private void ParkVehicle()
+		{
+		}
+
+		private void RemoveVehicle()
+		{
+		}
+
+		private void Information()
+		{
+			while (true)
+			{
+				_ui.Clear();
+
+				string information = _handler.GetInformation();
+				_ui.Print(information);
+				_ui.Space();
+
+				_ui.DisplayMenu(["0. Return"]);
+				string? input = _ui.ReadString("Enter: ");
+
+				if (!string.IsNullOrWhiteSpace(input) && input.Equals(GarageMenu.Return))
+				{
+					break;
+				}
+				else
+				{
+					_ui.Print("Incorret input", newLine: false);
+					_ui.Dots();
 				}
 			}
 		}
