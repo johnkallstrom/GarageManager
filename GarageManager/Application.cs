@@ -118,6 +118,19 @@ namespace GarageManager
 			while (true)
 			{
 				_ui.Clear();
+				var data = _handler.GetAmountByType();
+
+				foreach (var item in data)
+				{
+					_ui.Print($"{item.Key}: {item.Value}");
+				}
+
+				_ui.Space();
+				_ui.DisplayMenu(["0. Return"]);
+				string? input = _ui.ReadString("Enter: ");
+
+				if (!string.IsNullOrEmpty(input) && input.Equals(GarageMenu.Return)) break;
+				else _ui.Error(ErrorType.InvalidInput);
 			}
 		}
 

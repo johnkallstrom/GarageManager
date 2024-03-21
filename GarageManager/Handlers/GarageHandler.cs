@@ -30,5 +30,11 @@
 
 			_garage.Initialize(vehicles);
 		}
+
+		public Dictionary<string, int> GetAmountByType()
+		{
+			var result = _garage.GetAmountOfVehiclesByType();
+			return result;
+		}
 	}
 }
