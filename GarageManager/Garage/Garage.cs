@@ -21,12 +21,14 @@
 
 		public int TotalSpots => _capacity;
         public int AvailableSpots => _vehicles.Where(v => v is null).Count();
+		public bool IsFull => TotalSpots == GetAllVehicles().Count();
 
 		public IEnumerable<T> GetAllVehicles() => _vehicles.Where(v => v is not null);
 
 		public void Park(T vehicle)
 		{
 			if (vehicle is null) throw new ArgumentNullException(nameof(vehicle));
+			if (IsFull) throw new Exception($"The garage is full");
 
 			for (int i = 0; i < _capacity; i++)
 			{

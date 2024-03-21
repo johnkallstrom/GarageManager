@@ -7,6 +7,7 @@
 		void Initialize(List<T> vehicles);
 		int TotalSpots { get; }
 		int AvailableSpots { get;  }
+		bool IsFull { get; }
 		IEnumerable<T> GetAllVehicles();
         void Park(T vehicle);
 		void Remove(T vehicle);
