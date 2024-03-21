@@ -160,6 +160,7 @@
 					case "1":
 						try
 						{
+							// Todo: Read amount from user input
 							int amount = 5;
 							_handler.Populate(amount);
 							_ui.PrintWithDots($"{amount} vehicles added to garage");
