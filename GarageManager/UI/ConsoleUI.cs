@@ -2,7 +2,7 @@
 {
 	internal class ConsoleUI : IUserInterface
 	{
-		public void Space() => Console.WriteLine();
+        public void Space() => Console.WriteLine();
 		public void Clear() => Console.Clear();
 
 		public void Dots()
@@ -11,6 +11,15 @@
 			{
 				Console.Write(".");
 				Thread.Sleep(500);
+			}
+		}
+
+		public void Dots(int milliseconds)
+		{
+			for (int i = 1; i <= 3; i++)
+			{
+				Console.Write(".");
+				Thread.Sleep(milliseconds);
 			}
 		}
 

@@ -9,6 +9,7 @@
         void Clear();
         string? ReadString(string prompt);
         void Dots();
+        void Dots(int milliseconds);
         void Space();
     }
 }
