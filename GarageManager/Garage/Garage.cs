@@ -11,7 +11,8 @@
             _vehicles = new T[_capacity];
         }
 
-		public int AvailableSpots => _vehicles.Where(v => v is null).Count();
+		public int TotalSpots => _capacity;
+        public int AvailableSpots => _vehicles.Where(v => v is null).Count();
         public IEnumerable<T> ParkedVehicles => _vehicles.Where(v => v is not null);
 
         public void Park(T vehicle)
@@ -58,6 +59,11 @@
 			{
 				yield return vehicle;
 			}
+		}
+
+		public string Information()
+		{
+			return $"Total capacity: {TotalSpots}\nAvailable spots: {AvailableSpots}\nNumber of parked vehicles: {ParkedVehicles.Count()}";
 		}
 	}
 }
