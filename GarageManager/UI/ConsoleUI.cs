@@ -41,28 +41,27 @@
 			Console.WriteLine();
 		}
 
-		public void DisplayMenu(string[] options, string title)
-		{
-            if (!string.IsNullOrWhiteSpace(title))
-			{
-                Console.WriteLine(title);
-                Console.WriteLine();
-            }
-
-            foreach (var option in options)
-			{
-                Console.WriteLine(option);
-            }
-
-            Console.WriteLine();
-        }
-
 		public string? ReadString(string prompt)
 		{
 			Console.Write(prompt);
 			string? input = Console.ReadLine();
 
 			return input;
+		}
+
+		public void Error(ErrorType errorType)
+		{
+			switch (errorType)
+			{
+				case ErrorType.InvalidInput:
+                    Console.Write("Invalid input");
+                    for (int i = 1; i <= 3; i++)
+					{
+						Console.Write(".");
+						Thread.Sleep(500);
+					}
+					break;
+			}
 		}
 	}
 }
