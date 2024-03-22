@@ -9,10 +9,14 @@ IConfiguration configuration = new ConfigurationBuilder()
 	.Build();
 
 string? defaultCapacity = configuration.GetSection("Garage:DefaultCapacity").Value;
+var menuOptions = configuration.GetSection("MenuOptions")
+	.GetChildren()
+	.Select(section => new Option(section.Key, section.Value!))
+	.ToList();
 
 IGarage<IVehicle> garage = new Garage<IVehicle>(int.Parse(defaultCapacity!));
 IHandler handler = new GarageHandler(garage);
-IUserInterface consoleUI = new ConsoleUI();
+IUserInterface consoleUI = new ConsoleUI(menuOptions);
 
 var app = new Application(consoleUI, handler);
 app.Run();
