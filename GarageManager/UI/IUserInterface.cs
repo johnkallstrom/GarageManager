@@ -2,6 +2,7 @@
 {
     public interface IUserInterface
     {
+        void ShowMainMenu();
         void Print(string? message);
         void PrintWithDots(string? message);
         void DisplayMenu(string[] options);

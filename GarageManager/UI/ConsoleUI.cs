@@ -2,7 +2,22 @@
 {
     internal class ConsoleUI : IUserInterface
 	{
-        public void Space() => Console.WriteLine();
+		private List<Option> _menuOptions;
+
+        public ConsoleUI(List<Option> menuOptions)
+        {
+			_menuOptions = menuOptions;
+        }
+
+		public void ShowMainMenu()
+		{
+			foreach (var option in _menuOptions)
+			{
+                Console.WriteLine($"{option.Key} {option.Label}");
+            }
+		}
+
+		public void Space() => Console.WriteLine();
 		public void Clear() => Console.Clear();
 
 		public void Print(string? message) => Console.WriteLine(message);

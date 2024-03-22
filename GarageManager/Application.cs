@@ -17,19 +17,9 @@
 			while (_isAppRunning)
 			{
 				_ui.Clear();
-				_ui.DisplayMenu(
-					[
-					"1. List all vehicles", 
-					"2. List vehicles by type", 
-					"3. Park vehicle", 
-					"4. Remove vehicle", 
-					"5. Information", 
-					"6. Settings", 
-					"0. Exit"
-					]);
+				_ui.ShowMainMenu();
 
 				string? input = _ui.ReadString("Enter: ");
-
 				switch (input)
 				{
 					case MenuOption.ListAllVehicles:
