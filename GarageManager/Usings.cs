@@ -6,3 +6,4 @@ global using GarageManager.Garage.Vehicles;
 global using GarageManager.Handlers;
 
 global using System.Collections;
+global using Microsoft.Extensions.Configuration;

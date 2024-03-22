@@ -160,7 +160,7 @@
 					case "1":
 						try
 						{
-							// Todo: Read amount from user input
+							// Todo: Läs amount från användaren
 							int amount = 5;
 							_handler.Populate(amount);
 							_ui.PrintWithDots($"{amount} vehicles added to garage");
@@ -171,7 +171,6 @@
 						}
 						break;
 					case "2":
-						// Todo: Read capacity from user input
 						break;
 					case "0":
 						running = false;
