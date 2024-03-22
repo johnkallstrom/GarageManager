@@ -35,12 +35,15 @@
 						ListNumberOfVehicles();
 						break;
 					case "4":
-						ParkVehicle();
+						SearchVehicles();
 						break;
 					case "5":
-						RemoveVehicle();
+						ParkVehicle();
 						break;
 					case "6":
+						RemoveVehicle();
+						break;
+					case "7":
 						Information();
 						break;
 					default:
@@ -96,6 +99,40 @@
 
 				if (input.IsValid && input.Value.Equals("0")) break;
 				else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+			}
+		}
+
+		private void SearchVehicles()
+		{
+			while (true)
+			{
+				_ui.Clear();
+
+				var searchTerm = _ui.ReadString("Enter: ");
+				if (searchTerm.IsValid)
+				{
+					var vehicles = _handler.Search(searchTerm.Value);
+					if (vehicles.Count() > 0)
+					{
+						foreach (var v in vehicles)
+						{
+							_ui.PrintMessage(v.ToString());
+						}
+					}
+					else
+					{
+						_ui.PrintMessage("Nothing found");
+					}
+				}
+
+				_ui.PrintSubMenu(["1. Try again", "0. Return"]);
+				var input = _ui.ReadInt("Enter: ", min: 0, max: 1);
+				if (input.IsValid)
+				{
+					if (input.Value.Equals(0)) break;
+					if (input.Value.Equals(1)) continue;
+					else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+				}
 			}
 		}
 

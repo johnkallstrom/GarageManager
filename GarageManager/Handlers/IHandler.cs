@@ -2,6 +2,7 @@
 {
 	internal interface IHandler
 	{
+		IEnumerable<IVehicle> Search(string searchTerm);
 		void PopulateGarage(int amount);
 		void Remove(IVehicle vehicle);
 		void Park(IVehicle vehicle);

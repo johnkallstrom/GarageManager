@@ -101,5 +101,15 @@
 
 			return dictionary;
 		}
+
+		public IEnumerable<T> Search(string searchTerm)
+		{
+			var query = _vehicles.AsQueryable();
+
+			query = query.Where(v => v != null);
+			query = query.Where(v => v.RegistrationNumber.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+			return query.ToList();
+		}
 	}
 }

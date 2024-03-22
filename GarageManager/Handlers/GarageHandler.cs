@@ -33,5 +33,7 @@
 			var result = _garage.GetNumberOfVehicles();
 			return result;
 		}
+
+		public IEnumerable<IVehicle> Search(string searchTerm) => _garage.Search(searchTerm);
 	}
 }
