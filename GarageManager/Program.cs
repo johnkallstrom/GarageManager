@@ -1,5 +1,6 @@
 ﻿string dir = Directory.GetCurrentDirectory();
 string dir1 = Environment.CurrentDirectory;
+
 // Todo: Hämta sökvägen på ett bättre sätt
 string path = @"C:\Git\GarageManager\GarageManager\";
 
@@ -14,6 +15,7 @@ var menuOptions = configuration.GetSection("MenuOptions")
 	.Select(section => new Option(section.Key, section.Value!))
 	.ToList();
 
+// Todo: Använd DI istället
 IGarage<IVehicle> garage = new Garage<IVehicle>(int.Parse(defaultCapacity!));
 IHandler handler = new GarageHandler(garage);
 IUserInterface consoleUI = new ConsoleUI(menuOptions);

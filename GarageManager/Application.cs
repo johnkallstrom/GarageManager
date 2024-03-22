@@ -1,6 +1,6 @@
 ﻿namespace GarageManager
 {
-    internal class Application
+	internal class Application
 	{
 		private IHandler _handler;
 		private IUserInterface _ui;
@@ -19,32 +19,32 @@
 				_ui.Clear();
 				_ui.ShowMainMenu();
 
-				string? input = _ui.ReadString("Enter: ");
-				switch (input)
+				var input = _ui.ReadString("Enter: ");
+				switch (input.Value)
 				{
-					case MenuOption.ListAllVehicles:
-						ListAllVehicles();
-						break;
-					case MenuOption.ListVehiclesByType:
-						ListVehiclesByType();
-						break;
-					case MenuOption.ParkVehicle:
-						ParkVehicle();
-						break;
-					case MenuOption.RemoveVehicle:
-						RemoveVehicle();
-						break;
-					case MenuOption.Information:
-						Information();
-						break;
-					case MenuOption.Settings:
-						Settings();
-						break;
-					case MenuOption.Exit:
+					case "0":
 						Exit();
 						break;
+					case "1":
+						PopulateGarage();
+						break;
+					case "2":
+						ListAllVehicles();
+						break;
+					case "3":
+						ListNumberOfVehicles();
+						break;
+					case "4":
+						ParkVehicle();
+						break;
+					case "5":
+						RemoveVehicle();
+						break;
+					case "6":
+						Information();
+						break;
 					default:
-						_ui.Error(ErrorType.InvalidInput);
+						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 						break;
 				}
 			}
@@ -56,57 +56,84 @@
 			{
 				_ui.Clear();
 
-				var vehicles = _handler.GetAll();
+				var vehicles = _handler.GetAllVehicles();
 
 				if (vehicles.Count() > 0)
 				{
 					foreach (var v in vehicles)
 					{
-						_ui.Print(v.ToString());
+						_ui.PrintMessage(v.ToString());
 						_ui.Space();
 					}
 				}
 				else
 				{
-					_ui.Print("Garage is empty.");
+					_ui.PrintMessage("Garage is empty.");
 				}
 
-				_ui.DisplayMenu(["0. Return"]);
-				string? input = _ui.ReadString("Enter: ");
+				_ui.PrintSubMenu(["0. Return"]);
+				var input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrWhiteSpace(input) && input.Equals(MenuOption.Exit))
-				{
-					break;
-				}
-				else
-				{
-					_ui.Error(ErrorType.InvalidInput);
-				}
+				if (input.IsValid && input.Value.Equals("0")) break;
+				else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 			}
 		}
 
-		private void ListVehiclesByType()
+		private void ListNumberOfVehicles()
 		{
 			while (true)
 			{
 				_ui.Clear();
-				var data = _handler.GetAmountByType();
+				var data = _handler.GetNumberOfVehicles();
 
 				foreach (var item in data)
 				{
-					_ui.Print($"{item.Key}: {item.Value}");
+					_ui.PrintMessage($"{item.Key}: {item.Value}");
 				}
 
-				_ui.DisplayMenu(["0. Return"]);
-				string? input = _ui.ReadString("Enter: ");
+				_ui.PrintSubMenu(["0. Return"]);
+				var input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrEmpty(input) && input.Equals(MenuOption.Exit)) break;
-				else _ui.Error(ErrorType.InvalidInput);
+				if (input.IsValid && input.Value.Equals("0")) break;
+				else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 			}
 		}
 
 		private void ParkVehicle()
 		{
+			while (true)
+			{
+				_ui.Clear();
+				_ui.PrintSubMenu(["1. Car", "2. Motorcycle", "0. Return"]);
+
+				var input = _ui.ReadInt("Enter: ", min: 0, max: 2);
+				if (input.IsValid)
+				{
+					if (input.Value is 0) break;
+
+					var result = _ui.ReadVehicleData((VehicleType)input.Value);
+					if (result.IsValid)
+					{
+						try
+						{
+							_handler.Park(result.Vehicle);
+							_ui.PrintMessageWithDots($"{result.Vehicle.GetType().Name} parked in garage");
+						}
+						catch (Exception ex)
+						{
+							_ui.PrintMessageWithDots(ex.Message);
+						}
+					}
+					else
+					{
+						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+					}
+				}
+				else
+				{
+					_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+				}
+			}
 		}
 
 		private void RemoveVehicle()
@@ -119,55 +146,53 @@
 			{
 				_ui.Clear();
 
-				string information = _handler.GetInformation();
-				_ui.Print(information);
+				string information = _handler.Information();
+				_ui.PrintMessage(information);
 
-				_ui.DisplayMenu(["0. Return"]);
-				string? input = _ui.ReadString("Enter: ");
+				_ui.PrintSubMenu(["0. Return"]);
+				var input = _ui.ReadString("Enter: ");
 
-				if (!string.IsNullOrWhiteSpace(input) && input.Equals(MenuOption.Exit))
-				{
-					break;
-				}
-				else
-				{
-					_ui.Error(ErrorType.InvalidInput);
-				}
+				if (input.IsValid && input.Value.Equals("0")) break;
+				else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 			}
 		}
 
-		private void Settings()
+		private void PopulateGarage()
 		{
-			bool running = true;
-			while (running)
+			bool run = true;
+			while (run)
 			{
 				_ui.Clear();
-				_ui.DisplayMenu(["1. Populate garage", "2. Set garage capacity", "0. Return"]);
 
-				string? input = _ui.ReadString("Enter: ");
-				switch (input)
+				try
 				{
-					case "1":
-						try
-						{
-							// Todo: Läs amount från användaren
-							int amount = 5;
-							_handler.Populate(amount);
-							_ui.PrintWithDots($"{amount} vehicles added to garage");
-						}
-						catch (Exception ex)
-						{
-							_ui.PrintWithDots(ex.Message);
-						}
+					var number = _ui.ReadInt("Number of vehicles: ", min: 1, max: 10);
+					if (number.IsValid)
+					{
+						_handler.PopulateGarage(number.Value);
+						_ui.PrintMessage($"{number.Value} vehicles added to garage");
+					}
+				}
+				catch (Exception ex)
+				{
+					_ui.PrintMessageWithDots(ex.Message);
+				}
+
+				while (true)
+				{
+					_ui.PrintSubMenu(["0. Return"]);
+
+					var input = _ui.ReadInt("Enter: ");
+					if (input.IsValid && input.Value.Equals(0))
+					{
+						run = false;
 						break;
-					case "2":
-						break;
-					case "0":
-						running = false;
-						break;
-					default:
-						_ui.Error(ErrorType.InvalidInput);
-						break;
+					}
+					else
+					{
+						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+					}
+					_ui.Space();
 				}
 			}
 		}

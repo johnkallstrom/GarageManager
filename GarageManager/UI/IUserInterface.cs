@@ -1,14 +1,16 @@
 ﻿namespace GarageManager.UI
 {
-    public interface IUserInterface
+	internal interface IUserInterface
     {
         void ShowMainMenu();
-        void Print(string? message);
-        void PrintWithDots(string? message);
-        void DisplayMenu(string[] options);
+        void PrintMessage(string? message);
+        void PrintMessageWithDots(string? message);
+        void PrintSubMenu(string[] options);
         void Clear();
-        string? ReadString(string prompt);
+        (bool IsValid, IVehicle Vehicle) ReadVehicleData(VehicleType type);
+        (bool IsValid, string Value) ReadString(string prompt);
+        (bool IsValid, int Value) ReadInt(string prompt);
+        (bool IsValid, int Value) ReadInt(string prompt, int min, int max);
         void Space();
-        void Error(ErrorType errorType);
     }
 }

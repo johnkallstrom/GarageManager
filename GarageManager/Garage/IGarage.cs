@@ -2,7 +2,7 @@
 {
 	internal interface IGarage<T> : IEnumerable<T> where T : IVehicle
 	{
-		Dictionary<string, int> GetAmountOfVehiclesByType();
+		Dictionary<string, int> GetNumberOfVehicles();
 		bool RegistrationNumberExists(string registrationNumber);
 		void Initialize(List<T> vehicles);
 		int TotalSpots { get; }

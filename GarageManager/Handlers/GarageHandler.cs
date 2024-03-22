@@ -11,13 +11,13 @@
 
 		public void Park(IVehicle vehicle) => _garage.Park(vehicle);
 
-		public IEnumerable<IVehicle> GetAll() => _garage.GetAllVehicles();
+		public IEnumerable<IVehicle> GetAllVehicles() => _garage.GetAllVehicles();
 
 		public void Remove(IVehicle vehicle) => _garage.Remove(vehicle);
 
-		public string GetInformation() => _garage.Information();
+		public string Information() => _garage.Information();
 
-		public void Populate(int amount)
+		public void PopulateGarage(int amount)
 		{
 			var vehicles = new List<IVehicle>();
 			for (int i = 0; i < amount; i++)
@@ -28,9 +28,9 @@
 			_garage.Initialize(vehicles);
 		}
 
-		public Dictionary<string, int> GetAmountByType()
+		public Dictionary<string, int> GetNumberOfVehicles()
 		{
-			var result = _garage.GetAmountOfVehiclesByType();
+			var result = _garage.GetNumberOfVehicles();
 			return result;
 		}
 	}

@@ -89,7 +89,7 @@
 			return _vehicles.Any(v => v is not null && registrationNumber.Equals(v.RegistrationNumber, StringComparison.OrdinalIgnoreCase));
 		}
 
-		public Dictionary<string, int> GetAmountOfVehiclesByType()
+		public Dictionary<string, int> GetNumberOfVehicles()
 		{
 			var dictionary = new Dictionary<string, int>();
 
