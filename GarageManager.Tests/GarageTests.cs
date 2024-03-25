@@ -3,6 +3,88 @@
 	public class GarageTests
 	{
 		[Fact]
+		public void IsFull_ShouldBeFalse_WhenGarageIsNotFull()
+		{
+			var garage = new Garage<IVehicle>(5);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("PLD041", "Purple", 0),
+			});
+
+			Assert.False(garage.IsFull);
+		}
+
+		[Fact]
+		public void IsFull_ShouldBeTrue_WhenGarageIsFull()
+		{
+			var garage = new Garage<IVehicle>(3);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("PLD041", "Purple", 0),
+			});
+
+			Assert.True(garage.IsFull);
+		}
+
+		[Fact]
+		public void GetByRegNumber_Should_ThrowVehicleDoesNotExistException_WhenVehicleDoesNotExist()
+		{
+			// Arrange
+			var garage = new Garage<IVehicle>(5);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("OLM371", "Yellow", 0),
+			});
+
+			// Act
+			Action act = () => garage.GetByRegNumber("ZEQ913");
+
+			// Assert
+			Assert.Throws<VehicleDoesNotExistException>(act);
+		}
+
+		[Fact]
+		public void GetByRegNumber_ShouldNotReturnNull_WhenVehicleExists()
+		{
+			// Arrange
+			var garage = new Garage<IVehicle>(5);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("OLM371", "Yellow", 0),
+			});
+
+			// Act
+			var vehicle = garage.GetByRegNumber("OLM371");
+
+			// Assert
+			Assert.NotNull(vehicle);
+		}
+
+		[Fact]
+		public void TotalSpots_ShouldBe_EqualToCapacity()
+		{
+			// Arrange
+			int capacity = 10;
+			var garage = new Garage<IVehicle>(capacity);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("OLM371", "Yellow", 0),
+			});
+
+			Assert.Equal(garage.TotalSpots, capacity);
+		}
+
+		[Fact]
 		public void AvailableSpots_ShouldIncreaseByOne_WhenVehicleIsRemovedFromGarage()
 		{
 			// Arrange

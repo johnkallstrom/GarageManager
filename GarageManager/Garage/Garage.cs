@@ -115,7 +115,7 @@ namespace GarageManager.Garage
 
 			if (vehicle is null)
 			{
-				throw new Exception($"Could not find vehicle with registration number {registrationNumber}");
+				throw new VehicleDoesNotExistException(registrationNumber);
 			}
 
 			return vehicle;
