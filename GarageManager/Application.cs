@@ -139,30 +139,52 @@
 			while (true)
 			{
 				_ui.Clear();
+				_ui.PrintMessage("Choose search category");
+				_ui.PrintSubMenu(["1. Registration number", "2. Color", "3. Number of wheels", "0. Return"]);
 
-				var searchTerm = _ui.ReadString("Enter: ");
-				if (searchTerm.IsValid)
+				var input = _ui.ReadInt("Enter: ", min: 0, max: 3);
+				if (input.IsValid)
 				{
-					var vehicles = _handler.Search(searchTerm.Value);
-					if (vehicles.Count() > 0)
+					if (input.Value is 0) break;
+
+					var searchTerm = _ui.ReadString("Search: ");
+					if (searchTerm.IsValid)
 					{
-						foreach (var v in vehicles)
+						var vehicles = _handler.Search(searchTerm.Value, (SearchCategory)input.Value);
+						if (vehicles.Count() > 0)
 						{
-							_ui.PrintMessage(v.ToString());
+							_ui.Space();
+							foreach (var v in vehicles)
+							{
+								_ui.PrintMessage(v.ToString());
+								_ui.Space();
+							}
+						}
+						else
+						{
+							_ui.PrintMessageWithDots("No vehicles found");
+							continue;
 						}
 					}
 					else
 					{
-						_ui.PrintMessage("Nothing found");
+						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+						continue;
 					}
+				}
+				else
+				{
+					_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
+					continue;
 				}
 
 				_ui.PrintSubMenu(["1. Try again", "0. Return"]);
-				var input = _ui.ReadInt("Enter: ", min: 0, max: 1);
+				input = _ui.ReadInt("Enter: ", min: 0, max: 1);
+
 				if (input.IsValid)
 				{
-					if (input.Value.Equals(0)) break;
-					if (input.Value.Equals(1)) continue;
+					if (input.Value is 0) break;
+					if (input.Value is 1) continue;
 					else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 				}
 			}
@@ -173,9 +195,9 @@
 			while (true)
 			{
 				_ui.Clear();
-				_ui.PrintSubMenu(["1. Car", "2. Motorcycle", "0. Return"]);
+				_ui.PrintSubMenu(["1. Airplane", "2. Boat", "3. Bus", "4. Car", "5. Motorcycle", "6. Spaceship", "0. Return"]);
 
-				var input = _ui.ReadInt("Enter: ", min: 0, max: 2);
+				var input = _ui.ReadInt("Enter: ", min: 0, max: 6);
 				if (input.IsValid)
 				{
 					if (input.Value is 0) break;
