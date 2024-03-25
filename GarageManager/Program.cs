@@ -16,9 +16,37 @@ var menuOptions = configuration.GetSection("MenuOptions")
 	.ToList();
 
 // Todo: Använd DI istället
-IGarage<IVehicle> garage = new Garage<IVehicle>(int.Parse(defaultCapacity!));
-IHandler handler = new GarageHandler(garage);
 IUserInterface consoleUI = new ConsoleUI(menuOptions);
+
+IGarage<IVehicle> garage = default!;
+IHandler handler = default!;
+
+while (true)
+{
+	consoleUI.Clear();
+
+	var capacity = consoleUI.ReadInt("Garage capacity: ", min: 5, max: 100);
+	if (capacity.IsValid)
+	{
+		garage = new Garage<IVehicle>(capacity.Value);
+		handler = new GarageHandler(garage);
+
+		var vehicleAmount = consoleUI.ReadInt("Number of vehicles: ", min: 1, max: capacity.Value);
+
+		if (!vehicleAmount.IsValid)
+		{
+			consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+			continue;
+		}
+
+		handler.PopulateGarage(vehicleAmount.Value);
+
+		consoleUI.PrintMessageWithDots($"Garage capacity set to {capacity.Value} and {vehicleAmount.Value} vehicle(s) has been parked");
+		break;
+	}
+
+	consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+}
 
 var app = new Application(consoleUI, handler);
 app.Run();
