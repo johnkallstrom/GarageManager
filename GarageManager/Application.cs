@@ -17,6 +17,9 @@
 			while (_isAppRunning)
 			{
 				_ui.Clear();
+				string information = _handler.Information();
+				_ui.PrintMessage(information);
+				_ui.Space();
 				_ui.ShowMainMenu();
 
 				var input = _ui.ReadString("Enter: ");
@@ -43,12 +46,38 @@
 					case "6":
 						RemoveVehicle();
 						break;
-					case "7":
-						Information();
-						break;
 					default:
 						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 						break;
+				}
+			}
+		}
+
+		private void PopulateGarage()
+		{
+			while (true)
+			{
+				_ui.Clear();
+				_ui.PrintSubMenu(["0. Return"]);
+
+				var number = _ui.ReadInt("Number: ");
+				if (number.IsValid)
+				{
+					if (number.Value is 0) break;
+
+					try
+					{
+						_handler.PopulateGarage(number.Value);
+						_ui.PrintMessageWithDots($"{number.Value} vehicles added to garage");
+					}
+					catch (Exception ex)
+					{
+						_ui.PrintMessageWithDots(ex.Message);
+					}
+				}
+				else
+				{
+					_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 				}
 			}
 		}
@@ -87,11 +116,14 @@
 			while (true)
 			{
 				_ui.Clear();
-				var data = _handler.GetNumberOfVehicles();
 
+				var data = _handler.GetNumberOfVehicles();
 				foreach (var item in data)
 				{
-					_ui.PrintMessage($"{item.Key}: {item.Value}");
+					string vehicle = item.Key;
+					int number = item.Value;
+
+					_ui.PrintMessage($"{vehicle}: {number}");
 				}
 
 				_ui.PrintSubMenu(["0. Return"]);
@@ -175,61 +207,30 @@
 
 		private void RemoveVehicle()
 		{
-		}
-
-		private void Information()
-		{
 			while (true)
 			{
 				_ui.Clear();
-
-				string information = _handler.Information();
-				_ui.PrintMessage(information);
-
 				_ui.PrintSubMenu(["0. Return"]);
-				var input = _ui.ReadString("Enter: ");
 
-				if (input.IsValid && input.Value.Equals("0")) break;
-				else _ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
-			}
-		}
-
-		private void PopulateGarage()
-		{
-			bool run = true;
-			while (run)
-			{
-				_ui.Clear();
-
-				try
+				var input = _ui.ReadString("Registration number: ");
+				if (input.IsValid)
 				{
-					var number = _ui.ReadInt("Number of vehicles: ", min: 1, max: 10);
-					if (number.IsValid)
+					if (input.Value.Equals("0")) break;
+
+					try
 					{
-						_handler.PopulateGarage(number.Value);
-						_ui.PrintMessage($"{number.Value} vehicles added to garage");
+						IVehicle vehicle = _handler.GetByRegNumber(input.Value);
+						_handler.Remove(vehicle);
+						_ui.PrintMessageWithDots($"Completed. Vehicle with reg number {input.Value} removed");
+					}
+					catch (Exception ex)
+					{
+						_ui.PrintMessageWithDots(ex.Message);
 					}
 				}
-				catch (Exception ex)
+				else
 				{
-					_ui.PrintMessageWithDots(ex.Message);
-				}
-
-				while (true)
-				{
-					_ui.PrintSubMenu(["0. Return"]);
-
-					var input = _ui.ReadInt("Enter: ");
-					if (input.IsValid && input.Value.Equals(0))
-					{
-						run = false;
-						break;
-					}
-					else
-					{
-						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
-					}
-					_ui.Space();
+					_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 				}
 			}
 		}
