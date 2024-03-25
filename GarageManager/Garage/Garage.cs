@@ -15,9 +15,9 @@
         public int AvailableSpots => _vehicles.Where(v => v is null).Count();
 		public bool IsFull => TotalSpots == GetAllVehicles().Count();
 
-		public void Initialize(List<T> vehicles)
+		public void Initialize(List<T> vehiclesToPark)
 		{
-			foreach (var v in vehicles)
+			foreach (var v in vehiclesToPark)
 			{
 				Park(v);
 			}
@@ -65,7 +65,7 @@
 
 		public string Information()
 		{
-			return $"Capacity: {TotalSpots}\nAvailable: {AvailableSpots}\nParked vehicles: {GetAllVehicles().Count()}";
+			return $"Total capacity: {TotalSpots}\nFree parking spots: {AvailableSpots}\nNumber of parked vehicles: {GetAllVehicles().Count()}";
 		}
 
 		public IEnumerator<T> GetEnumerator()
@@ -93,11 +93,19 @@
 		{
 			var dictionary = new Dictionary<string, int>();
 
-			int amountOfCars = _vehicles.Where(v => v is Car).Count();
-			int amountOfMotorcycles = _vehicles.Where(v => v is Motorcycle).Count();
+			int numberOfAirplanes = _vehicles.Where(v => v is Airplane).Count();
+			int numberOfCars = _vehicles.Where(v => v is Car).Count();
+			int numberOfMotorcycles = _vehicles.Where(v => v is Motorcycle).Count();
+			int numberOfSpaceships = _vehicles.Where(v => v is Spaceship).Count();
+			int numberOfBoats = _vehicles.Where(v => v is Boat).Count();
+			int numberOfBuses = _vehicles.Where(v => v is Bus).Count();
 
-			dictionary.Add(nameof(Car), amountOfCars);
-			dictionary.Add(nameof(Motorcycle), amountOfMotorcycles);
+			dictionary.Add(nameof(Airplane), numberOfAirplanes);
+			dictionary.Add(nameof(Car), numberOfCars);
+			dictionary.Add(nameof(Motorcycle), numberOfMotorcycles);
+			dictionary.Add(nameof(Spaceship), numberOfSpaceships);
+			dictionary.Add(nameof(Boat), numberOfBoats);
+			dictionary.Add(nameof(Bus), numberOfBuses);
 
 			return dictionary;
 		}
@@ -108,8 +116,22 @@
 
 			query = query.Where(v => v != null);
 			query = query.Where(v => v.RegistrationNumber.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
+			query = query.Where(v => v.Color.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
 
-			return query.ToList();
+			var result = query.ToList();
+			return result;
+		}
+
+		public T GetByRegNumber(string registrationNumber)
+		{
+			var vehicle = _vehicles.FirstOrDefault(v => v is not null && v.RegistrationNumber.Equals(registrationNumber, StringComparison.OrdinalIgnoreCase));
+
+			if (vehicle is null)
+			{
+				throw new Exception($"Could not find vehicle with registration number {registrationNumber}");
+			}
+
+			return vehicle;
 		}
 	}
 }

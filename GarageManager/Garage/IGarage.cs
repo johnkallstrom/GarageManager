@@ -2,6 +2,7 @@
 {
 	internal interface IGarage<T> : IEnumerable<T> where T : IVehicle
 	{
+		T GetByRegNumber(string registrationNumber);
 		IEnumerable<T> Search(string searchTerm);
 		Dictionary<string, int> GetNumberOfVehicles();
 		bool RegistrationNumberExists(string registrationNumber);
