@@ -53,7 +53,7 @@
 			for (int i = 1; i <= 3; i++)
 			{
 				Console.Write(".");
-				Thread.Sleep(500);
+				Thread.Sleep(1000);
 			}
 		}
 
