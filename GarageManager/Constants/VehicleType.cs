@@ -2,7 +2,11 @@
 {
 	internal enum VehicleType
     {
-        Car = 1,
-        Motorcycle = 2
+        Airplane = 1,
+        Boat = 2,
+        Bus = 3,
+        Car = 4,
+        Motorcycle = 5,
+        Spaceship = 6
     }
 }

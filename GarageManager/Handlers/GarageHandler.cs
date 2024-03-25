@@ -34,7 +34,7 @@
 			return result;
 		}
 
-		public IEnumerable<IVehicle> Search(string searchTerm) => _garage.Search(searchTerm);
+		public IEnumerable<IVehicle> Search(string searchTerm, SearchCategory category) => _garage.Search(searchTerm, category);
 
 		public IVehicle GetByRegNumber(string registrationNumber) => _garage.GetByRegNumber(registrationNumber);
 	}

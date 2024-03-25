@@ -3,7 +3,7 @@
 	internal interface IHandler
 	{
 		IVehicle GetByRegNumber(string registrationNumber);
-		IEnumerable<IVehicle> Search(string searchTerm);
+		IEnumerable<IVehicle> Search(string searchTerm, SearchCategory category);
 		void PopulateGarage(int amount);
 		void Remove(IVehicle vehicle);
 		void Park(IVehicle vehicle);

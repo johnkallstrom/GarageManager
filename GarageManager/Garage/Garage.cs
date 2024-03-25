@@ -28,7 +28,7 @@
 		public void Park(T vehicle)
 		{
 			if (vehicle is null) throw new ArgumentNullException(nameof(vehicle));
-			if (IsFull) throw new Exception($"The garage is full");
+			if (IsFull) throw new Exception("The garage is full");
 
 			for (int i = 0; i < _capacity; i++)
 			{
@@ -110,13 +110,24 @@
 			return dictionary;
 		}
 
-		public IEnumerable<T> Search(string searchTerm)
+		public IEnumerable<T> Search(string searchTerm, SearchCategory category)
 		{
 			var query = _vehicles.AsQueryable();
 
 			query = query.Where(v => v != null);
-			query = query.Where(v => v.RegistrationNumber.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
-			query = query.Where(v => v.Color.Equals(searchTerm, StringComparison.OrdinalIgnoreCase));
+
+			switch (category)
+			{
+				case SearchCategory.RegistrationNumber:
+					query = query.Where(v => v.RegistrationNumber.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+					break;
+				case SearchCategory.Color:
+					query = query.Where(v => v.Color.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+					break;
+				case SearchCategory.NumberOfWheels:
+					query = query.Where(v => v.NumberOfWheels.Equals(int.Parse(searchTerm)));
+					break;
+			}
 
 			var result = query.ToList();
 			return result;
