@@ -1,19 +1,21 @@
-﻿namespace GarageManager.Garage
+﻿[assembly: InternalsVisibleTo("GarageManager.Tests")]
+namespace GarageManager.Garage
 {
 	internal class Garage<T> : IGarage<T> where T : IVehicle
 	{
-        private readonly T[] _vehicles;
+        private readonly T[] _spots;
 		private int _capacity;
 
         public Garage(int capacity)
         {
             _capacity = capacity;
-            _vehicles = new T[_capacity];
+            _spots = new T[_capacity];
         }
 
 		public int TotalSpots => _capacity;
-        public int AvailableSpots => _vehicles.Where(v => v is null).Count();
-		public bool IsFull => TotalSpots == GetAllVehicles().Count();
+        public int AvailableSpots => _spots.Where(x => x is null).Count();
+		public bool IsFull => TotalSpots.Equals(Vehicles.Length);
+		public T[] Vehicles => _spots.Where(x => x is not null).ToArray();
 
 		public void Initialize(List<T> vehiclesToPark)
 		{
@@ -23,26 +25,24 @@
 			}
 		}
 
-		public IEnumerable<T> GetAllVehicles() => _vehicles.Where(v => v is not null);
-
 		public void Park(T vehicle)
 		{
 			if (vehicle is null) throw new ArgumentNullException(nameof(vehicle));
-			if (IsFull) throw new Exception("The garage is full");
+			if (IsFull) throw new GarageIsFullException();
 
 			for (int i = 0; i < _capacity; i++)
 			{
-				IVehicle current = _vehicles[i];
+				IVehicle current = _spots[i];
 				if (current is null)
 				{
-					if (!RegistrationNumberExists(vehicle.RegistrationNumber))
+					if (!RegNumberExists(vehicle.RegistrationNumber))
 					{
-						_vehicles[i] = vehicle;
+						_spots[i] = vehicle;
 						break;
 					}
 					else
 					{
-						throw new Exception($"The registration number '{vehicle.RegistrationNumber}' is not unique");
+						throw new Exception($"The registration number '{vehicle.RegistrationNumber}' already exists");
 					}
 				}
 			}
@@ -54,10 +54,10 @@
 
 			for (int i = 0; i < _capacity; i++)
 			{
-				IVehicle current = _vehicles[i];
+				IVehicle current = _spots[i];
 				if (current is not null && current.Equals(vehicle))
 				{
-					_vehicles[i] = default!;
+					_spots[i] = default!;
 					break;
 				}
 			}
@@ -65,40 +65,19 @@
 
 		public string Information()
 		{
-			return $"Total capacity: {TotalSpots}\nFree parking spots: {AvailableSpots}\nNumber of parked vehicles: {GetAllVehicles().Count()}";
-		}
-
-		public IEnumerator<T> GetEnumerator()
-		{
-			foreach (var vehicle in _vehicles)
-			{
-				yield return vehicle;
-			}
-		}
-
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			foreach (var vehicle in _vehicles)
-			{
-				yield return vehicle;
-			}
-		}
-
-		public bool RegistrationNumberExists(string registrationNumber)
-		{
-			return _vehicles.Any(v => v is not null && registrationNumber.Equals(v.RegistrationNumber, StringComparison.OrdinalIgnoreCase));
+			return $"Total capacity: {TotalSpots}\nFree parking spots: {AvailableSpots}\nNumber of parked vehicles: {Vehicles.Length}";
 		}
 
 		public Dictionary<string, int> GetNumberOfVehicles()
 		{
 			var dictionary = new Dictionary<string, int>();
 
-			int numberOfAirplanes = _vehicles.Where(v => v is Airplane).Count();
-			int numberOfCars = _vehicles.Where(v => v is Car).Count();
-			int numberOfMotorcycles = _vehicles.Where(v => v is Motorcycle).Count();
-			int numberOfSpaceships = _vehicles.Where(v => v is Spaceship).Count();
-			int numberOfBoats = _vehicles.Where(v => v is Boat).Count();
-			int numberOfBuses = _vehicles.Where(v => v is Bus).Count();
+			int numberOfAirplanes = Vehicles.Where(v => v is Airplane).Count();
+			int numberOfCars = Vehicles.Where(v => v is Car).Count();
+			int numberOfMotorcycles = Vehicles.Where(v => v is Motorcycle).Count();
+			int numberOfSpaceships = Vehicles.Where(v => v is Spaceship).Count();
+			int numberOfBoats = Vehicles.Where(v => v is Boat).Count();
+			int numberOfBuses = Vehicles.Where(v => v is Bus).Count();
 
 			dictionary.Add(nameof(Airplane), numberOfAirplanes);
 			dictionary.Add(nameof(Car), numberOfCars);
@@ -112,9 +91,7 @@
 
 		public IEnumerable<T> Search(string searchTerm, SearchCategory category)
 		{
-			var query = _vehicles.AsQueryable();
-
-			query = query.Where(v => v != null);
+			var query = Vehicles.AsQueryable();
 
 			switch (category)
 			{
@@ -129,13 +106,12 @@
 					break;
 			}
 
-			var result = query.ToList();
-			return result;
+			return query.ToList();
 		}
 
 		public T GetByRegNumber(string registrationNumber)
 		{
-			var vehicle = _vehicles.FirstOrDefault(v => v is not null && v.RegistrationNumber.Equals(registrationNumber, StringComparison.OrdinalIgnoreCase));
+			var vehicle = Vehicles.FirstOrDefault(v => v.RegistrationNumber.Equals(registrationNumber, StringComparison.OrdinalIgnoreCase));
 
 			if (vehicle is null)
 			{
@@ -143,6 +119,27 @@
 			}
 
 			return vehicle;
+		}
+
+		private bool RegNumberExists(string registrationNumber)
+		{
+			return Vehicles.Any(v => registrationNumber.Equals(v.RegistrationNumber, StringComparison.OrdinalIgnoreCase));
+		}
+
+		public IEnumerator<T> GetEnumerator()
+		{
+			foreach (var vehicle in _spots)
+			{
+				yield return vehicle;
+			}
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			foreach (var vehicle in _spots)
+			{
+				yield return vehicle;
+			}
 		}
 	}
 }

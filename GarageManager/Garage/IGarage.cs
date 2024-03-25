@@ -5,12 +5,11 @@
 		T GetByRegNumber(string registrationNumber);
 		IEnumerable<T> Search(string searchTerm, SearchCategory category);
 		Dictionary<string, int> GetNumberOfVehicles();
-		bool RegistrationNumberExists(string registrationNumber);
 		void Initialize(List<T> vehicles);
 		int TotalSpots { get; }
 		int AvailableSpots { get;  }
 		bool IsFull { get; }
-		IEnumerable<T> GetAllVehicles();
+		T[] Vehicles { get; }
         void Park(T vehicle);
 		void Remove(T vehicle);
 		string Information();

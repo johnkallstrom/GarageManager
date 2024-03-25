@@ -11,7 +11,7 @@
 
 		public void Park(IVehicle vehicle) => _garage.Park(vehicle);
 
-		public IEnumerable<IVehicle> GetAllVehicles() => _garage.GetAllVehicles();
+		public IEnumerable<IVehicle> GetAllVehicles() => _garage.Vehicles;
 
 		public void Remove(IVehicle vehicle) => _garage.Remove(vehicle);
 
