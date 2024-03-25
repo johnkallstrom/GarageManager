@@ -32,16 +32,15 @@ while (true)
 		handler = new GarageHandler(garage);
 
 		var vehicleAmount = consoleUI.ReadInt("Number of vehicles: ", min: 1, max: capacity.Value);
-
 		if (!vehicleAmount.IsValid)
 		{
 			consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
 			continue;
 		}
 
-		handler.PopulateGarage(vehicleAmount.Value);
+		handler.Initialize(vehicleAmount.Value);
 
-		consoleUI.PrintMessageWithDots($"Garage capacity set to {capacity.Value} and {vehicleAmount.Value} vehicle(s) has been parked");
+		consoleUI.PrintMessageWithDots($"Garage capacity set to {capacity.Value} and {vehicleAmount.Value} vehicle(s) has been added");
 		break;
 	}
 
