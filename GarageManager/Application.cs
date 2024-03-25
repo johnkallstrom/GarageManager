@@ -29,55 +29,23 @@
 						Exit();
 						break;
 					case "1":
-						PopulateGarage();
-						break;
-					case "2":
 						ListAllVehicles();
 						break;
-					case "3":
+					case "2":
 						ListNumberOfVehicles();
 						break;
-					case "4":
+					case "3":
 						SearchVehicles();
 						break;
-					case "5":
+					case "4":
 						ParkVehicle();
 						break;
-					case "6":
+					case "5":
 						RemoveVehicle();
 						break;
 					default:
 						_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 						break;
-				}
-			}
-		}
-
-		private void PopulateGarage()
-		{
-			while (true)
-			{
-				_ui.Clear();
-				_ui.PrintSubMenu(["0. Return"]);
-
-				var number = _ui.ReadInt("Number: ");
-				if (number.IsValid)
-				{
-					if (number.Value is 0) break;
-
-					try
-					{
-						_handler.PopulateGarage(number.Value);
-						_ui.PrintMessageWithDots($"{number.Value} vehicles added to garage");
-					}
-					catch (Exception ex)
-					{
-						_ui.PrintMessageWithDots(ex.Message);
-					}
-				}
-				else
-				{
-					_ui.PrintMessageWithDots(ErrorMessage.InvalidInput);
 				}
 			}
 		}
