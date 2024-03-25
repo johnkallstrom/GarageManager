@@ -23,17 +23,13 @@
 
 			for (int i = 0; i < numberOfVehicles; i++)
 			{
-				cars.Add(new Car($"ABC{new Random().Next(minValue: 100, maxValue: 999)}", "Green", 4));
+				cars.Add(new Car($"ABC{new Random().Next(minValue: 100, maxValue: 999)}", "Green", 4, "Volkswagen"));
 			}
 
 			_garage.Initialize(cars);
 		}
 
-		public Dictionary<string, int> GetNumberOfVehicles()
-		{
-			var result = _garage.GetNumberOfVehicles();
-			return result;
-		}
+		public Dictionary<string, int> GetNumberOfVehicles() => _garage.GetNumberOfVehicles();
 
 		public IEnumerable<IVehicle> Search(string searchTerm, SearchCategory category) => _garage.Search(searchTerm, category);
 

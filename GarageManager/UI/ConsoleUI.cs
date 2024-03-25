@@ -31,6 +31,16 @@
 			}
 		}
 
+		public void PrintMessageWithDots(string? message)
+		{
+			Console.Write(message);
+			for (int i = 1; i <= 3; i++)
+			{
+				Console.Write(".");
+				Thread.Sleep(1000);
+			}
+		}
+
 		public (bool IsValid, string Value) ReadString(string prompt)
 		{
 			bool valid = false;
@@ -45,16 +55,6 @@
 			}
 
 			return (valid, str);
-		}
-
-		public void PrintMessageWithDots(string? message)
-		{
-			Console.Write(message);
-			for (int i = 1; i <= 3; i++)
-			{
-				Console.Write(".");
-				Thread.Sleep(1000);
-			}
 		}
 
 		public (bool IsValid, int Value) ReadInt(string prompt)
@@ -117,8 +117,12 @@
 						valid = true;
 						break;
 					case VehicleType.Car:
-						vehicle = new Car(regNumber.Value, color.Value, numberOfWheels: 4);
-						valid = true;
+						var model = ReadString("Model: ");
+						if (model.IsValid)
+						{
+							vehicle = new Car(regNumber.Value, color.Value, numberOfWheels: 4, model.Value);
+							valid = true;
+						}
 						break;
 					case VehicleType.Motorcycle:
 						vehicle = new Motorcycle(regNumber.Value, color.Value, numberOfWheels: 2);

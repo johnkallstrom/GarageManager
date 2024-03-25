@@ -2,8 +2,16 @@
 {
 	internal class Car : Vehicle
 	{
-		public Car(string registrationNumber, string color, int numberOfWheels) : base(registrationNumber, color, numberOfWheels)
+        public string Model { get; set; }
+
+        public Car(string registrationNumber, string color, int numberOfWheels, string model) : base(registrationNumber, color, numberOfWheels)
 		{
+			Model = model;
+		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}\nModel: {Model}";
 		}
 	}
 }
