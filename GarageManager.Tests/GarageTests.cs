@@ -3,6 +3,46 @@
 	public class GarageTests
 	{
 		[Fact]
+		public void GetNumberOfVehicles_Should_ReturnDictionaryWithCountEqualToSix()
+		{
+			// Arrange
+			var garage = new Garage<IVehicle>(5);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("PLD041", "Purple", 0),
+			});
+
+			// Act
+			var result = garage.GetNumberOfVehicles();
+
+			// Arrange
+			int expected = 6;
+			int actual = result.Count;
+			Assert.Equal(expected, actual);
+		}
+
+		[Fact]
+		public void GetNumberOfVehicles_Should_ReturnDictionaryWithStringKeyAndIntValue()
+		{
+			// Arrange
+			var garage = new Garage<IVehicle>(5);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("MVQ456", "Black", 0),
+				new Spaceship("VHF041", "Purple", 0),
+				new Spaceship("PLD041", "Purple", 0),
+			});
+
+			// Act
+			var result = garage.GetNumberOfVehicles();
+
+			// Arrange
+			Assert.IsType<Dictionary<string, int>>(result);
+		}
+
+		[Fact]
 		public void IsFull_ShouldBeFalse_WhenGarageIsNotFull()
 		{
 			var garage = new Garage<IVehicle>(5);
@@ -186,6 +226,29 @@
 
 			// Assert
 			Assert.Throws<Exception>(act);
+		}
+
+		[Fact]
+		public void Park_Should_IncreaseVehiclesLengthByOne_WhenVehicleIsAddedToGarage()
+		{
+			// Arrange
+			var garage = new Garage<IVehicle>(5);
+			garage.Initialize(new List<IVehicle>
+			{
+				new Spaceship("BLQ123", "Gray", 0),
+				new Spaceship("MVQ456", "Black", 0),
+			});
+
+			IVehicle vehicle = new Spaceship("XQP099", "Yellow", 0);
+
+			// Act
+			garage.Park(vehicle);
+
+			// Assert
+			int expected = 3;
+			int actual = garage.Vehicles.Length;
+
+			Assert.Equal(expected, actual);
 		}
 	}
 }
