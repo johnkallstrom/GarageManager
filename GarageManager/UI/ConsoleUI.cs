@@ -104,12 +104,28 @@
 			{
 				switch (type)
 				{
+					case VehicleType.Airplane:
+						vehicle = new Airplane(regNumber.Value, color.Value, numberOfWheels: 0);
+						valid = true;
+						break;
+					case VehicleType.Boat:
+						vehicle = new Boat(regNumber.Value, color.Value, numberOfWheels: 0);
+						valid = true;
+						break;
+					case VehicleType.Bus:
+						vehicle = new Bus(regNumber.Value, color.Value, numberOfWheels: 4);
+						valid = true;
+						break;
 					case VehicleType.Car:
-						vehicle = new Car(regNumber.Value, color.Value, 4);
+						vehicle = new Car(regNumber.Value, color.Value, numberOfWheels: 4);
 						valid = true;
 						break;
 					case VehicleType.Motorcycle:
-						vehicle = new Motorcycle(regNumber.Value, color.Value, 2);
+						vehicle = new Motorcycle(regNumber.Value, color.Value, numberOfWheels: 2);
+						valid = true;
+						break;
+					case VehicleType.Spaceship:
+						vehicle = new Spaceship(regNumber.Value, color.Value,numberOfWheels: 0);
 						valid = true;
 						break;
 				}
