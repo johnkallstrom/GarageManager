@@ -4,7 +4,7 @@
 	{
 		IVehicle GetByRegNumber(string registrationNumber);
 		IEnumerable<IVehicle> Search(string searchTerm, SearchCategory category);
-		void PopulateGarage(int amount);
+		void Initialize(int numberOfVehicles);
 		void Remove(IVehicle vehicle);
 		void Park(IVehicle vehicle);
 		IEnumerable<IVehicle> GetAllVehicles();

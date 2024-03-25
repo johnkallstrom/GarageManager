@@ -17,15 +17,16 @@
 
 		public string Information() => _garage.Information();
 
-		public void PopulateGarage(int amount)
+		public void Initialize(int numberOfVehicles)
 		{
-			var vehicles = new List<IVehicle>();
-			for (int i = 0; i < amount; i++)
+			var cars = new List<IVehicle>();
+
+			for (int i = 0; i < numberOfVehicles; i++)
 			{
-				vehicles.Add(new Car($"ABC{new Random().Next(minValue: 100, maxValue: 999)}", "Green", 4));
+				cars.Add(new Car($"ABC{new Random().Next(minValue: 100, maxValue: 999)}", "Green", 4));
 			}
 
-			_garage.Initialize(vehicles);
+			_garage.Initialize(cars);
 		}
 
 		public Dictionary<string, int> GetNumberOfVehicles()
