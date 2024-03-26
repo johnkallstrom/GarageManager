@@ -8,5 +8,10 @@
 		{
 			IsDoubleDecker = isDoubleDecker;
 		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}\nIs double decker: {IsDoubleDecker}";
+		}
 	}
 }

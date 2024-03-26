@@ -10,5 +10,10 @@
 			Model = model;
 			NumberOfEngines = numberOfEngines;
 		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}\nModel: {Model}\nNumber of engines: {NumberOfEngines}";
+		}
 	}
 }

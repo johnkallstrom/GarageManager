@@ -8,5 +8,10 @@
 		{
 			TopSpeed = topSpeed;
 		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}\nTop speed: {TopSpeed} km/h";
+		}
 	}
 }

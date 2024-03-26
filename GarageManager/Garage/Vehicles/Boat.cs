@@ -8,5 +8,10 @@
 		{
 			Propulsion = propulsion;
 		}
+
+		public override string ToString()
+		{
+			return $"{base.ToString()}\nType of propulsion: {Propulsion}";
+		}
 	}
 }
