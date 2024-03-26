@@ -9,9 +9,9 @@
 			var garage = new Garage<IVehicle>(5);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("PLD041", "Purple", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("PLD041", "Purple", 0),
 			});
 
 			// Act
@@ -30,9 +30,9 @@
 			var garage = new Garage<IVehicle>(5);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("PLD041", "Purple", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("PLD041", "Purple", 0),
 			});
 
 			// Act
@@ -48,9 +48,9 @@
 			var garage = new Garage<IVehicle>(5);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("PLD041", "Purple", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("PLD041", "Purple", 0),
 			});
 
 			Assert.False(garage.IsFull);
@@ -62,9 +62,9 @@
 			var garage = new Garage<IVehicle>(3);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("PLD041", "Purple", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("PLD041", "Purple", 0),
 			});
 
 			Assert.True(garage.IsFull);
@@ -77,9 +77,9 @@
 			var garage = new Garage<IVehicle>(5);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("OLM371", "Yellow", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("OLM371", "Yellow", 0),
 			});
 
 			// Act
@@ -96,9 +96,9 @@
 			var garage = new Garage<IVehicle>(5);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("OLM371", "Yellow", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("OLM371", "Yellow", 0),
 			});
 
 			// Act
@@ -116,9 +116,9 @@
 			var garage = new Garage<IVehicle>(capacity);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
-				new Spaceship("OLM371", "Yellow", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
+				new Spacecraft("OLM371", "Yellow", 0),
 			});
 
 			Assert.Equal(garage.TotalSpots, capacity);
@@ -128,13 +128,13 @@
 		public void AvailableSpots_ShouldIncreaseByOne_WhenVehicleIsRemovedFromGarage()
 		{
 			// Arrange
-			IVehicle vehicleToRemove = new Spaceship("BLQ123", "Gray", 0);
+			IVehicle vehicleToRemove = new Spacecraft("BLQ123", "Gray", 0);
 
 			var garage = new Garage<IVehicle>(10);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
 				vehicleToRemove,
 			});
 
@@ -156,12 +156,12 @@
 			var garage = new Garage<IVehicle>(10);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("BLQ123", "Gray", 0),
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("VHF041", "Purple", 0),
+				new Spacecraft("BLQ123", "Gray", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("VHF041", "Purple", 0),
 			});
 
-			IVehicle vehicle = new Spaceship("FPQ981", "Yellow", 0);
+			IVehicle vehicle = new Spacecraft("FPQ981", "Yellow", 0);
 			int expected = garage.AvailableSpots - 1;
 
 			// Act
@@ -194,12 +194,12 @@
 			var garage = new Garage<IVehicle>(3);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("BLQ123", "Gray", 0),
-				new Spaceship("MVQ456", "Black", 0),
-				new Spaceship("PDS093", "Purple", 0),
+				new Spacecraft("BLQ123", "Gray", 0),
+				new Spacecraft("MVQ456", "Black", 0),
+				new Spacecraft("PDS093", "Purple", 0),
 			});
 
-			IVehicle vehicle = new Spaceship("UQP", "Yellow", 0);
+			IVehicle vehicle = new Spacecraft("UQP", "Yellow", 0);
 
 			// Act
 			Action act = () => garage.Park(vehicle);
@@ -215,11 +215,11 @@
 			var garage = new Garage<IVehicle>(3);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("BLQ123", "Gray", 0),
-				new Spaceship("MVQ456", "Black", 0),
+				new Spacecraft("BLQ123", "Gray", 0),
+				new Spacecraft("MVQ456", "Black", 0),
 			});
 
-			IVehicle vehicle = new Spaceship("BLQ123", "Yellow", 0);
+			IVehicle vehicle = new Spacecraft("BLQ123", "Yellow", 0);
 
 			// Act
 			Action act = () => garage.Park(vehicle);
@@ -235,11 +235,11 @@
 			var garage = new Garage<IVehicle>(5);
 			garage.Initialize(new List<IVehicle>
 			{
-				new Spaceship("BLQ123", "Gray", 0),
-				new Spaceship("MVQ456", "Black", 0),
+				new Spacecraft("BLQ123", "Gray", 0),
+				new Spacecraft("MVQ456", "Black", 0),
 			});
 
-			IVehicle vehicle = new Spaceship("XQP099", "Yellow", 0);
+			IVehicle vehicle = new Spacecraft("XQP099", "Yellow", 0);
 
 			// Act
 			garage.Park(vehicle);

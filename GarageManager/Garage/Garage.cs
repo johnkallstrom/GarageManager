@@ -75,14 +75,14 @@ namespace GarageManager.Garage
 			int numberOfAirplanes = Vehicles.Where(v => v is Airplane).Count();
 			int numberOfCars = Vehicles.Where(v => v is Car).Count();
 			int numberOfMotorcycles = Vehicles.Where(v => v is Motorcycle).Count();
-			int numberOfSpaceships = Vehicles.Where(v => v is Spaceship).Count();
+			int numberOfSpaceships = Vehicles.Where(v => v is Spacecraft).Count();
 			int numberOfBoats = Vehicles.Where(v => v is Boat).Count();
 			int numberOfBuses = Vehicles.Where(v => v is Bus).Count();
 
 			dictionary.Add(nameof(Airplane), numberOfAirplanes);
 			dictionary.Add(nameof(Car), numberOfCars);
 			dictionary.Add(nameof(Motorcycle), numberOfMotorcycles);
-			dictionary.Add(nameof(Spaceship), numberOfSpaceships);
+			dictionary.Add(nameof(Spacecraft), numberOfSpaceships);
 			dictionary.Add(nameof(Boat), numberOfBoats);
 			dictionary.Add(nameof(Bus), numberOfBuses);
 

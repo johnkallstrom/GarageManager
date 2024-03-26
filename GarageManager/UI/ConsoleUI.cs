@@ -129,7 +129,7 @@
 						valid = true;
 						break;
 					case VehicleType.Spaceship:
-						vehicle = new Spaceship(regNumber.Value, color.Value,numberOfWheels: 0);
+						vehicle = new Spacecraft(regNumber.Value, color.Value,numberOfWheels: 0);
 						valid = true;
 						break;
 				}
