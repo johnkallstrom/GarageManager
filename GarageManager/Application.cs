@@ -163,26 +163,266 @@
 			while (true)
 			{
 				_consoleUI.Clear();
-				_consoleUI.PrintSubMenu(["1. Airplane", "2. Boat", "3. Bus", "4. Car", "5. Motorcycle", "6. Spaceship", "0. Return"]);
+				_consoleUI.PrintSubMenu(["1. Airplane", "2. Boat", "3. Bus", "4. Car", "5. Motorcycle", "6. Spacecraft", "0. Return"]);
 
 				var input = InputReader.GetInt("Enter: ", min: 0, max: 6);
-				if (input.IsValid)
+				if (!input.IsValid)
 				{
-					if (input.Value is 0) break;
-
-					var regNumber = InputReader.GetString("Registration number: ");
-					var color = InputReader.GetString("Color: ");
-
-					if (regNumber.IsValid && color.IsValid)
-					{
-						var vehicleType = (VehicleType)input.Value;
-						switch (vehicleType)
-						{
-							case VehicleType.Airplane:
-								break;
-						}
-					}
+					_consoleUI.Error();
+					continue;
 				}
+
+				if (input.Value is 0) break;
+
+				var vehicleType = (VehicleType)input.Value;
+				switch (vehicleType)
+				{
+					case VehicleType.Airplane:
+						ParkAirplane();
+						break;
+					case VehicleType.Boat:
+						ParkBoat();
+						break;
+					case VehicleType.Bus:
+						ParkBus();
+						break;
+					case VehicleType.Car:
+						ParkCar();
+						break;
+					case VehicleType.Motorcycle:
+						ParkMotorcycle();
+						break;
+					case VehicleType.Spacecraft:
+						ParkSpacecraft();
+						break;
+				}
+			}
+		}
+
+		private void ParkAirplane()
+		{
+			while (true)
+			{
+				_consoleUI.Clear();
+				_consoleUI.PrintMessage("Enter airplane details");
+
+				var regNumber = InputReader.GetString("Registration number: ");
+				if (!regNumber.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var color = InputReader.GetString("Color: ");
+				if (!color.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var model = InputReader.GetString("Model: ");
+				if (!model.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var numberOfEngines = InputReader.GetInt("Number of engines: ", min: 2, max: 4);
+				if (!numberOfEngines.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var airplane = new Airplane(regNumber.Value, color.Value, numberOfWheels: 0, model.Value, numberOfEngines.Value);
+				_handler.Park(airplane);
+				_consoleUI.PrintMessageWithDots($"{airplane.GetType().Name} parked in garage");
+				break;
+			}
+		}
+
+		private void ParkBoat()
+		{
+			while (true)
+			{
+				_consoleUI.Clear();
+				_consoleUI.PrintMessage("Enter boat details");
+
+				var regNumber = InputReader.GetString("Registration number: ");
+				if (!regNumber.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var color = InputReader.GetString("Color: ");
+				if (!color.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				_consoleUI.PrintSubMenu(["1. Inboard motor", "2. Outboard motor", "3. Fan", "4. Wind"]);
+				var propulsion = InputReader.GetInt("Enter: ", min: 1, max: 4);
+				if (!propulsion.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var boat = new Boat(regNumber.Value, color.Value, numberOfWheels: 0, (BoatPropulsion)propulsion.Value);
+				_handler.Park(boat);
+				_consoleUI.PrintMessageWithDots($"{boat.GetType().Name} parked in garage");
+				break;
+			}
+		}
+
+		private void ParkBus()
+		{
+			while (true)
+			{
+				_consoleUI.Clear();
+				_consoleUI.PrintMessage("Enter bus details");
+
+				var regNumber = InputReader.GetString("Registration number: ");
+				if (!regNumber.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var color = InputReader.GetString("Color: ");
+				if (!color.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var input = InputReader.GetString("Double decker (Y/N): ");
+				if (!input.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var bus = new Bus(regNumber.Value, color.Value, numberOfWheels: 4, input.Value == "Y" ? true : false);
+				_handler.Park(bus);
+				_consoleUI.PrintMessageWithDots($"{bus.GetType().Name} parked in garage");
+				break;
+			}
+		}
+
+		private void ParkCar()
+		{
+			while (true)
+			{
+				_consoleUI.Clear();
+				_consoleUI.PrintMessage("Enter car details");
+
+				var regNumber = InputReader.GetString("Registration number: ");
+				if (!regNumber.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var color = InputReader.GetString("Color: ");
+				if (!color.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var model = InputReader.GetString("Model: ");
+				if (!model.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var car = new Car(regNumber.Value, color.Value, numberOfWheels: 4, model.Value);
+				_handler.Park(car);
+				_consoleUI.PrintMessageWithDots($"{car.GetType().Name} parked in garage");
+				break;
+			}
+		}
+
+		private void ParkMotorcycle()
+		{
+			while (true)
+			{
+				_consoleUI.Clear();
+				_consoleUI.PrintMessage("Enter motorcycle details");
+
+				var regNumber = InputReader.GetString("Registration number: ");
+				if (!regNumber.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var color = InputReader.GetString("Color: ");
+				if (!color.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var model = InputReader.GetString("Model: ");
+				if (!model.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+
+				var topSpeed = InputReader.GetInt("Top speed: ", min: 5, max: 500);
+				if (!topSpeed.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var motorcycle = new Motorcycle(regNumber.Value, color.Value, numberOfWheels: 2, topSpeed.Value);
+				_handler.Park(motorcycle);
+				_consoleUI.PrintMessageWithDots($"{motorcycle.GetType().Name} parked in garage");
+				break;
+			}
+		}
+
+		private void ParkSpacecraft()
+		{
+			while (true)
+			{
+				_consoleUI.Clear();
+				_consoleUI.PrintMessage("Enter spacecraft details");
+
+				var regNumber = InputReader.GetString("Registration number: ");
+				if (!regNumber.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var color = InputReader.GetString("Color: ");
+				if (!color.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				_consoleUI.PrintSubMenu(["1. Observation", "2. Exploration", "3. Transportation", "4. Communication"]);
+				var purpose = InputReader.GetInt("Purpose of spaceflight: ", min: 1, max: 4);
+				if (!purpose.IsValid)
+				{
+					_consoleUI.Error();
+					continue;
+				}
+
+				var spacecraft = new Spacecraft(regNumber.Value, color.Value, numberOfWheels: 0, (SpaceflightPurpose)purpose.Value);
+				_handler.Park(spacecraft);
+				_consoleUI.PrintMessageWithDots($"{spacecraft.GetType().Name} parked in garage");
+				break;
 			}
 		}
 
