@@ -2,8 +2,11 @@
 {
 	internal class Bus : Vehicle
 	{
-		public Bus(string registrationNumber, string color, int numberOfWheels) : base(registrationNumber, color, numberOfWheels)
+        public bool IsDoubleDecker { get; set; }
+
+        public Bus(string registrationNumber, string color, int numberOfWheels, bool isDoubleDecker) : base(registrationNumber, color, numberOfWheels)
 		{
+			IsDoubleDecker = isDoubleDecker;
 		}
 	}
 }

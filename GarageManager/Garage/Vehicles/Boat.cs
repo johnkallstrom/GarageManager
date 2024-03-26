@@ -2,8 +2,11 @@
 {
 	internal class Boat : Vehicle
 	{
-		public Boat(string registrationNumber, string color, int numberOfWheels) : base(registrationNumber, color, numberOfWheels)
+        public BoatPropulsion Propulsion { get; set; }
+
+        public Boat(string registrationNumber, string color, int numberOfWheels, BoatPropulsion propulsion) : base(registrationNumber, color, numberOfWheels)
 		{
+			Propulsion = propulsion;
 		}
 	}
 }

@@ -2,8 +2,13 @@
 {
 	internal class Airplane : Vehicle
 	{
-		public Airplane(string registrationNumber, string color, int numberOfWheels) : base(registrationNumber, color, numberOfWheels)
+        public int NumberOfEngines { get; set; }
+        public string Model { get; set; }
+
+        public Airplane(string registrationNumber, string color, int numberOfWheels, string model, int numberOfEngines) : base(registrationNumber, color, numberOfWheels)
 		{
+			Model = model;
+			NumberOfEngines = numberOfEngines;
 		}
 	}
 }
