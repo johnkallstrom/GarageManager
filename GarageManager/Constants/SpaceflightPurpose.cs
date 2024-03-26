@@ -2,9 +2,9 @@
 {
 	internal enum SpaceflightPurpose
 	{
-		Observation,
-		Exploration,
-		Transporation,
-		Communication
+		Observation = 1,
+		Exploration = 2,
+		Transporation = 3,
+		Communication = 4
 	}
 }

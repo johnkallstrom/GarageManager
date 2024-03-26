@@ -7,6 +7,6 @@
         Bus = 3,
         Car = 4,
         Motorcycle = 5,
-        Spaceship = 6
+        Spacecraft = 6
     }
 }

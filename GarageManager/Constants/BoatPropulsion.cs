@@ -2,10 +2,9 @@
 {
 	internal enum BoatPropulsion
 	{
-		InboardMotor,
-		OutboardMotor,
-		Fan,
-		Wind,
-		Rowing
+		InboardMotor = 1,
+		OutboardMotor = 2,
+		Fan = 3,
+		Wind = 4,
 	}
 }
