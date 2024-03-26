@@ -1,8 +1,12 @@
-﻿string dir = Directory.GetCurrentDirectory();
-string dir1 = Environment.CurrentDirectory;
+﻿string GetProjectDirectoryPath()
+{
+	string workingDirectory = Environment.CurrentDirectory;
+	string projectDirectory = Directory.GetParent(workingDirectory)!.Parent!.Parent!.FullName;
 
-// Todo: Hämta sökvägen på ett bättre sätt
-string path = @"C:\Git\GarageManager\GarageManager\";
+	return projectDirectory;
+}
+
+string path = GetProjectDirectoryPath();
 
 IConfiguration configuration = new ConfigurationBuilder()
 	.SetBasePath(path)
