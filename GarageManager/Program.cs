@@ -13,7 +13,6 @@ IConfiguration configuration = new ConfigurationBuilder()
 	.AddJsonFile("appsettings.json", false, reloadOnChange: true)
 	.Build();
 
-string? defaultCapacity = configuration.GetSection("Garage:DefaultCapacity").Value;
 var menuOptions = configuration.GetSection("MenuOptions")
 	.GetChildren()
 	.Select(section => new Option(section.Key, section.Value!))
@@ -29,29 +28,33 @@ while (true)
 {
 	consoleUI.Clear();
 
-	var capacity = InputReader.GetInt("Garage capacity: ", min: 5, max: 100);
-	if (capacity.IsValid)
+	int min = 1;
+	int max = 500;
+
+	var capacity = InputReader.GetInt("Garage capacity: ", min, max);
+	if (!capacity.IsValid)
 	{
-		garage = new Garage<IVehicle>(capacity.Value);
-		handler = new GarageHandler(garage);
-
-		var vehicleAmount = InputReader.GetInt("Number of vehicles: ", min: 0, max: capacity.Value);
-		if (!vehicleAmount.IsValid)
-		{
-			consoleUI.Error();
-			continue;
-		}
-
-		if (vehicleAmount.Value > 0)
-		{
-			handler.Initialize(vehicleAmount.Value);
-		}
-
-		consoleUI.PrintMessageWithDots($"Initializing garage");
-		break;
+		consoleUI.PrintMessageWithDots($"The capacity must be between {min} and {max}");
+		continue;
 	}
 
-	consoleUI.Error();
+	garage = new Garage<IVehicle>(capacity.Value);
+	handler = new GarageHandler(garage);
+
+	var vehicleAmount = InputReader.GetInt("Number of vehicles: ", min: 0, max: capacity.Value);
+	if (!vehicleAmount.IsValid)
+	{
+		consoleUI.Error();
+		continue;
+	}
+
+	if (vehicleAmount.Value > 0)
+	{
+		handler.Initialize(vehicleAmount.Value);
+	}
+
+	consoleUI.PrintMessageWithDots($"Initializing garage");
+	break;
 }
 
 var app = new Application(consoleUI, handler);
