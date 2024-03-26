@@ -25,13 +25,13 @@ while (true)
 {
 	consoleUI.Clear();
 
-	var capacity = consoleUI.ReadInt("Garage capacity: ", min: 5, max: 100);
+	var capacity = InputReader.GetInt("Garage capacity: ", min: 5, max: 100);
 	if (capacity.IsValid)
 	{
 		garage = new Garage<IVehicle>(capacity.Value);
 		handler = new GarageHandler(garage);
 
-		var vehicleAmount = consoleUI.ReadInt("Number of vehicles: ", min: 1, max: capacity.Value);
+		var vehicleAmount = InputReader.GetInt("Number of vehicles: ", min: 1, max: capacity.Value);
 		if (!vehicleAmount.IsValid)
 		{
 			consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);

@@ -22,7 +22,7 @@
 				_consoleUI.Space();
 				_consoleUI.ShowMainMenu();
 
-				var input = _consoleUI.ReadString("Enter: ");
+				var input = InputReader.GetString("Enter: ");
 				switch (input.Value)
 				{
 					case "0":
@@ -72,7 +72,7 @@
 				}
 
 				_consoleUI.PrintSubMenu(["0. Return"]);
-				var input = _consoleUI.ReadString("Enter: ");
+				var input = InputReader.GetString("Enter: ");
 
 				if (input.IsValid && input.Value.Equals("0")) break;
 				else _consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
@@ -95,7 +95,7 @@
 				}
 
 				_consoleUI.PrintSubMenu(["0. Return"]);
-				var input = _consoleUI.ReadString("Enter: ");
+				var input = InputReader.GetString("Enter: ");
 
 				if (input.IsValid && input.Value.Equals("0")) break;
 				else _consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
@@ -110,12 +110,12 @@
 				_consoleUI.PrintMessage("Choose search category");
 				_consoleUI.PrintSubMenu(["1. Registration number", "2. Color", "3. Number of wheels", "0. Return"]);
 
-				var input = _consoleUI.ReadInt("Enter: ", min: 0, max: 3);
+				var input = InputReader.GetInt("Enter: ", min: 0, max: 3);
 				if (input.IsValid)
 				{
 					if (input.Value is 0) break;
 
-					var searchTerm = _consoleUI.ReadString("Search: ");
+					var searchTerm = InputReader.GetString("Search: ");
 					if (searchTerm.IsValid)
 					{
 						var vehicles = _handler.Search(searchTerm.Value, (SearchCategory)input.Value);
@@ -147,7 +147,7 @@
 				}
 
 				_consoleUI.PrintSubMenu(["1. Try again", "0. Return"]);
-				input = _consoleUI.ReadInt("Enter: ", min: 0, max: 1);
+				input = InputReader.GetInt("Enter: ", min: 0, max: 1);
 
 				if (input.IsValid)
 				{
@@ -165,32 +165,23 @@
 				_consoleUI.Clear();
 				_consoleUI.PrintSubMenu(["1. Airplane", "2. Boat", "3. Bus", "4. Car", "5. Motorcycle", "6. Spaceship", "0. Return"]);
 
-				var input = _consoleUI.ReadInt("Enter: ", min: 0, max: 6);
+				var input = InputReader.GetInt("Enter: ", min: 0, max: 6);
 				if (input.IsValid)
 				{
 					if (input.Value is 0) break;
 
-					var result = _consoleUI.ReadVehicleData((VehicleType)input.Value);
-					if (result.IsValid)
+					var regNumber = InputReader.GetString("Registration number: ");
+					var color = InputReader.GetString("Color: ");
+
+					if (regNumber.IsValid && color.IsValid)
 					{
-						try
+						var vehicleType = (VehicleType)input.Value;
+						switch (vehicleType)
 						{
-							_handler.Park(result.Vehicle);
-							_consoleUI.PrintMessageWithDots($"{result.Vehicle.GetType().Name} parked in garage");
-						}
-						catch (Exception ex)
-						{
-							_consoleUI.PrintMessageWithDots(ex.Message);
+							case VehicleType.Airplane:
+								break;
 						}
 					}
-					else
-					{
-						_consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
-					}
-				}
-				else
-				{
-					_consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
 				}
 			}
 		}
@@ -202,7 +193,7 @@
 				_consoleUI.Clear();
 				_consoleUI.PrintSubMenu(["0. Return"]);
 
-				var input = _consoleUI.ReadString("Registration number: ");
+				var input = InputReader.GetString("Registration number: ");
 				if (input.IsValid)
 				{
 					if (input.Value.Equals("0")) break;
