@@ -44,7 +44,7 @@
 						RemoveVehicle();
 						break;
 					default:
-						_consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+						_consoleUI.Error();
 						break;
 				}
 			}
@@ -75,7 +75,7 @@
 				var input = InputReader.GetString("Enter: ");
 
 				if (input.IsValid && input.Value.Equals("0")) break;
-				else _consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+				else _consoleUI.Error();
 			}
 		}
 
@@ -98,7 +98,7 @@
 				var input = InputReader.GetString("Enter: ");
 
 				if (input.IsValid && input.Value.Equals("0")) break;
-				else _consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+				else _consoleUI.Error();
 			}
 		}
 
@@ -136,13 +136,13 @@
 					}
 					else
 					{
-						_consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+						_consoleUI.Error();
 						continue;
 					}
 				}
 				else
 				{
-					_consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+					_consoleUI.Error();
 					continue;
 				}
 
@@ -153,7 +153,7 @@
 				{
 					if (input.Value is 0) break;
 					if (input.Value is 1) continue;
-					else _consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+					else _consoleUI.Error();
 				}
 			}
 		}
@@ -451,7 +451,7 @@
 				}
 				else
 				{
-					_consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+					_consoleUI.Error();
 				}
 			}
 		}
