@@ -15,7 +15,7 @@ namespace GarageManager.Garage
 		public int TotalSpots => _capacity;
         public int AvailableSpots => _spots.Where(x => x is null).Count();
 		public bool IsFull => TotalSpots.Equals(Vehicles.Length);
-		public T[] Vehicles => _spots.Where(x => x is not null).ToArray();
+		public T[] Vehicles => _spots.Where(x => x is not null && x is IVehicle).ToArray();
 
 		public void Initialize(List<T> vehiclesToPark)
 		{
