@@ -31,20 +31,23 @@ while (true)
 		garage = new Garage<IVehicle>(capacity.Value);
 		handler = new GarageHandler(garage);
 
-		var vehicleAmount = InputReader.GetInt("Number of vehicles: ", min: 1, max: capacity.Value);
+		var vehicleAmount = InputReader.GetInt("Number of vehicles: ", min: 0, max: capacity.Value);
 		if (!vehicleAmount.IsValid)
 		{
-			consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+			consoleUI.Error();
 			continue;
 		}
 
-		handler.Initialize(vehicleAmount.Value);
+		if (vehicleAmount.Value > 0)
+		{
+			handler.Initialize(vehicleAmount.Value);
+		}
 
-		consoleUI.PrintMessageWithDots($"Garage capacity set to {capacity.Value} and {vehicleAmount.Value} vehicle(s) has been added");
+		consoleUI.PrintMessageWithDots($"Initializing garage");
 		break;
 	}
 
-	consoleUI.PrintMessageWithDots(ErrorMessage.InvalidInput);
+	consoleUI.Error();
 }
 
 var app = new Application(consoleUI, handler);
