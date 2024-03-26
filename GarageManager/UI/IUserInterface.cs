@@ -8,5 +8,6 @@
         void PrintSubMenu(string[] options);
         void Clear();
         void Space();
+        void Error();
     }
 }

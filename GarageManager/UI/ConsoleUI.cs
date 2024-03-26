@@ -40,5 +40,7 @@
 				Thread.Sleep(1000);
 			}
 		}
+
+		public void Error() => PrintMessageWithDots(ErrorMessage.InvalidInput);
 	}
 }
